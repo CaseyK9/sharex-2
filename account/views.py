@@ -46,8 +46,8 @@ class UserLoginViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             #request.session.set_expiry(3153600000)
 
             # response = UserAccountSerializer(user).data
-
-            return Response("success", status=status.HTTP_200_OK)
+            obj = Token.objects.get(user=user)
+            return Response(obj.key, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
