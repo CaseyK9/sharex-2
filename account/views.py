@@ -71,7 +71,7 @@ class UserRegisterViewSet(mixins.CreateModelMixin,viewsets.GenericViewSet):
             )
             account.set_password(serializer.data['password'])
             account.save()
-            return Response({'success'},status=status.HTTP_201_CREATED)
+            return Response({"success":false},status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

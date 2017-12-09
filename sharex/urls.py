@@ -23,6 +23,5 @@ urlpatterns = [
     #url(r'^test/$', test_Token),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
-    url(r'^api-token-auth/', views.obtain_auth_token),
     # url(r'^logout/$', 'django.contrib.auth.views.logout',{'next_page': '/successfully_logged_out/'})
 ]
