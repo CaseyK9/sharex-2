@@ -27,9 +27,12 @@ class Request(models.Model):
     	(6, 'sport_car'),
     	(7, 'pickup'),
     )
-    
+	_type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES , default='1')
 	is_complete = models.BooleanField(default=False)
 
 	timestamp = models.DateTimeField(auto_now_add=True, db_index=True,null=True)
 	timeupdate = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return self.account.email if self.account.email else ""
 # Create your models here.

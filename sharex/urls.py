@@ -7,7 +7,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
 from account.views import *
-
+from request.views import *
 schema_view = get_swagger_view(title='ShareX')
 router = DefaultRouter()
 
@@ -15,6 +15,8 @@ router.register(r'login', UserLoginViewSet)
 router.register(r'register',UserRegisterViewSet)
 router.register(r'logout',UserLogoutViewSet)
 router.register(r'test',test_Token)
+
+router.register(r'get_request',get_request)
 # router.register(r'gentoken',gen_token)
 # router.register(r'logout',UserLogoutViewSet)
 

@@ -8,7 +8,7 @@ from rest_framework.authentication import TokenAuthentication,BasicAuthenticatio
 from rest_framework.exceptions import AuthenticationFailed, PermissionDenied, NotAuthenticated
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
-
+from django.http import JsonResponse
 from .models import Account
 #from .authenticate import CsrfExemptSessionAuthentication
 from .serializers import *
@@ -47,7 +47,7 @@ class UserLoginViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
             # response = UserAccountSerializer(user).data
             obj = Token.objects.get(user=user)
-            return Response(obj.key, status=status.HTTP_200_OK)
+            return Response({'Token':obj.key,'is_driver':user.is_driver}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -71,7 +71,7 @@ class UserRegisterViewSet(mixins.CreateModelMixin,viewsets.GenericViewSet):
             )
             account.set_password(serializer.data['password'])
             account.save()
-            return Response({"success":false},status=status.HTTP_201_CREATED)
+            return JsonResponse({'error':'false','content':'success'},status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
