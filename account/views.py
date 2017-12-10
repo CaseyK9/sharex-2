@@ -47,7 +47,7 @@ class UserLoginViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
             # response = UserAccountSerializer(user).data
             obj = Token.objects.get(user=user)
-            return Response({'Token':obj.key,'is_driver':user.is_driver}, status=status.HTTP_200_OK)
+            return JsonResponse({'Token':obj.key,'is_driver':user.is_driver}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
