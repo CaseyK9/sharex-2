@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'match',
     'request',
     'car',
+    'travel',
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',

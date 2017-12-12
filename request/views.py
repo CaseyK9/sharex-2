@@ -31,6 +31,9 @@ class GetRequestViewSet(mixins.CreateModelMixin,
 					destination_location = serializer.data['destination_location'],
 					destination_longtitude = serializer.data['destination_longtitude'],
 					destination_lattitude = serializer.data['destination_lattitude'],
+					receiver_name = serializer.data['receiver_name'],
+					receiver_tel = serializer.data['receiver_tel'],
+					receiver_address = serializer.data['receiver_address'],
 					_type = serializer.data['_type'],
 					is_complete = serializer.data['is_complete']
 				)

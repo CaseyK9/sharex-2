@@ -17,6 +17,10 @@ class Request(models.Model):
 	destination_location = models.CharField(max_length=255,blank=True,null=True)
 	destination_longtitude = models.FloatField(max_length=255,blank=True,null=True)
 	destination_lattitude = models.FloatField(max_length=255,blank=True,null=True)
+
+	receiver_name = models.CharField(max_length=255,blank=True,null=True)
+	receiver_tel = models.CharField(max_length=255,blank=True,null=True)
+	receiver_address = models.CharField(max_length=255,blank=True,null=True)
 	
 	TYPE_CHOICES = (
     	(1, 'truck'),
