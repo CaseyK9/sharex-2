@@ -19,8 +19,8 @@ router.register(r'logout',UserLogoutViewSet)
 
 router.register(r'test',test_Token)
 
-router.register(r'get_request',get_request)
-router.register(r'add_car',add_car)
+router.register(r'get-request',GetRequestViewSet)
+router.register(r'add-car',add_car)
 # router.register(r'gentoken',gen_token)
 # router.register(r'logout',UserLogoutViewSet)
 

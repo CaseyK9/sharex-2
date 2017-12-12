@@ -11,12 +11,12 @@ from rest_framework.authtoken.models import Token
 class Request(models.Model):
 	account = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
 	pickup_location = models.CharField(max_length=255,blank=True,null=True)
-	pickup_longtitude = models.CharField(max_length=255,blank=True,null=True)
-	pickup_lattitude = models.CharField(max_length=255,blank=True,null=True)
+	pickup_longtitude = models.FloatField(max_length=255,blank=True,null=True)
+	pickup_lattitude = models.FloatField(max_length=255,blank=True,null=True)
 	
 	destination_location = models.CharField(max_length=255,blank=True,null=True)
-	destination_longtitude = models.CharField(max_length=255,blank=True,null=True)
-	destination_lattitude = models.CharField(max_length=255,blank=True,null=True)
+	destination_longtitude = models.FloatField(max_length=255,blank=True,null=True)
+	destination_lattitude = models.FloatField(max_length=255,blank=True,null=True)
 	
 	TYPE_CHOICES = (
     	(1, 'truck'),

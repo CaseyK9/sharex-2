@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework import viewsets, mixins
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.decorators import list_route, detail_route
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication,BasicAuthentication, SessionAuthentication
@@ -14,7 +15,8 @@ from .models import Request
 #from .authenticate import CsrfExemptSessionAuthentication
 from account.serializers import *
 
-class get_request(mixins.CreateModelMixin,viewsets.GenericViewSet):
+class GetRequestViewSet(mixins.CreateModelMixin,
+					    viewsets.GenericViewSet):
 	queryset = Request.objects.all()
 	serializer_class = UserRequestSerializer
 	def create(self,request):
@@ -36,4 +38,5 @@ class get_request(mixins.CreateModelMixin,viewsets.GenericViewSet):
 			return JsonResponse({'error':'false','content':'success'})
 		else :
 			return Response("Unauthenticated")
+			
 # Create your views her

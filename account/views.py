@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import viewsets, mixins
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication,BasicAuthentication, SessionAuthentication
@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from .models import Account
 #from .authenticate import CsrfExemptSessionAuthentication
 from .serializers import *
+from .permissions import IsAuthenticated
 
 
 class UserLoginViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -47,7 +48,7 @@ class UserLoginViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
             # response = UserAccountSerializer(user).data
             obj = Token.objects.get(user=user)
-            return JsonResponse({'Token':obj.key,'is_driver':str(user.is_driver)}, status=status.HTTP_200_OK)
+            return Response({'Token':obj.key,'is_driver':str(user.is_driver)}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -79,6 +80,8 @@ class UserRegisterViewSet(mixins.CreateModelMixin,viewsets.GenericViewSet):
 class UserLogoutViewSet(mixins.CreateModelMixin,viewsets.GenericViewSet):
     queryset = Account.objects.all()
     serializer_class = UserLogoutSerializer
+    permission_classes = (IsAuthenticated, )
+
     def create(self,request):
         if request.user.is_authenticated():
             logout(request)
@@ -97,7 +100,6 @@ class test_Token(mixins.CreateModelMixin,viewsets.GenericViewSet):
             return Response("Unauthenticated")
 
 
-        
 # class gen_token(mixins.CreateModelMixin,viewsets.GenericViewSet):
 #     queryset = Account.objects.all()
 #     serializer_class = genSerializer
