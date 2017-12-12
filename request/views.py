@@ -19,9 +19,9 @@ class get_request(mixins.CreateModelMixin,viewsets.GenericViewSet):
 	serializer_class = UserRequestSerializer
 	def create(self,request):
 		if request.user.is_authenticated():
-			serializer = self.serializer_class(data=request.data)
+			serializer = self.get_serializer(data=request.data)
 			if serializer.is_valid():
-				_request = Request.objects.create(
+				var_request = Request.objects.create(
 					account = request.user,
 					pickup_location = serializer.data['pickup_location'],
 					pickup_longtitude = serializer.data['pickup_longtitude'],
@@ -31,9 +31,9 @@ class get_request(mixins.CreateModelMixin,viewsets.GenericViewSet):
 					destination_lattitude = serializer.data['destination_lattitude'],
 					_type = serializer.data['_type'],
 					is_complete = serializer.data['is_complete']
-			)
-			_request.save()
-			return Response("done")
+				)
+				var_request.save()
+			return JsonResponse({'error':'false','content':'success'})
 		else :
 			return Response("Unauthenticated")
 # Create your views her

@@ -92,7 +92,7 @@ class test_Token(mixins.CreateModelMixin,viewsets.GenericViewSet):
     serializer_class = testSerializer
     def create(self,request):
         if request.user.is_authenticated():
-            return Response("Authenticated")
+            return Response(request.user.email)
         else :
             return Response("Unauthenticated")
 
