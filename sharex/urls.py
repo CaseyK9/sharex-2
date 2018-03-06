@@ -9,6 +9,8 @@ from rest_framework.authtoken import views
 from account.views import *
 from request.views import *
 from car.views import *
+from travel.views import *
+from matching.views import *
 
 schema_view = get_swagger_view(title='ShareX')
 router = DefaultRouter()
@@ -20,6 +22,9 @@ router.register(r'logout',UserLogoutViewSet)
 router.register(r'test',test_Token)
 
 router.register(r'get-request',GetRequestViewSet)
+router.register(r'get-travel',GetTravelViewSet)
+router.register(r'get-list-match',GetList_Match_ViewSet)
+router.register(r'add-matching',GetMatchViewSet)
 router.register(r'add-car',add_car)
 # router.register(r'gentoken',gen_token)
 # router.register(r'logout',UserLogoutViewSet)

@@ -23,21 +23,18 @@ class Request(models.Model):
 	receiver_address = models.CharField(max_length=255,blank=True,null=True)
 	
 	TYPE_CHOICES = (
-    	(1, 'truck'),
-    	(2, 'pickup'),
-    	(3, 'van'),
-    	(4, 'eco_car'),
-    	(5, 'SUV'),
-    	(6, 'sport_car'),
-    	(7, 'pickup'),
-    )
+		(1, 'truck'),
+		(2, 'sedan'),
+		(3, 'pickup'),
+		(4, 'motorcycle'),
+	)
 
 	_type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES , default='1')
-	is_complete = models.BooleanField(default=False)
+	status = models.CharField(max_length=255,default="doing")
 
 	timestamp = models.DateTimeField(auto_now_add=True, db_index=True,null=True)
 	timeupdate = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return self.account.email if self.account.email else ""
+		return self.account.email if self.account.email else "" 
 # Create your models here.

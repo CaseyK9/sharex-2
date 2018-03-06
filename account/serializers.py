@@ -5,6 +5,7 @@ from .models import Account
 from request.models import Request
 from car.models import Car
 from travel.models import Travel
+from matching.models import *
 class UserLogInSerializer(serializers.Serializer):
 
     email = serializers.CharField(max_length=255)
@@ -22,13 +23,13 @@ class UserRequestSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Request
-		fields = ('pickup_location','pickup_longtitude','pickup_lattitude','destination_location','destination_longtitude','destination_lattitude','_type','is_complete')
+		exclude = ('account',)
 
 class UserTravelSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Travel
-		fields = ('start_location','start_longtitude','start_lattitude','destination_location','destination_longtitude','destination_lattitude','current_longtitude','current_lattitude','is_complete')
+		fields = ('start_location','start_longtitude','car_id','start_lattitude','destination_location','destination_longtitude','destination_lattitude','current_longtitude','current_lattitude','is_complete')
 
 
 class UseraddcarSerializer(serializers.ModelSerializer):
@@ -43,7 +44,20 @@ class UserLogoutSerializer(serializers.Serializer):
 class testSerializer(serializers.Serializer):
 		"""sdgg"""
 
-# class genSerializer(serializers.Serializer):
-# 	"""sdgg"""
+
+class UserMatchListSerializer(serializers.Serializer):
+	class Meta:
+		model = Matching_List
+		fields = ('travel_id')
+			
+		"""sdgg"""
+		
+class UserMatchSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Matching
+		fields = ('driver','customer','status')
+	
+			
+
 		
 			
