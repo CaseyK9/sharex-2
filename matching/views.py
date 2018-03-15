@@ -21,15 +21,21 @@ class GetList_Match_ViewSet(mixins.CreateModelMixin,viewsets.GenericViewSet): #r
 		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid():
 			#travel_id = serializer.data['travel_id']
-			tv = Travel.objects.get(car_id="string")
+			tv = Travel.objects.get(pk = serializer.data['travel_id'])
+			#return Response(tv.pk)
 			#dt = Request.objects.get(pk='6')
 			LIST = []
 			for i in Request.objects.all():
 				url = "https://maps.googleapis.com/maps/api/directions/json?origin="+str(tv.start_lattitude)+","+str(tv.start_longtitude)+"&destination="+str(tv.destination_lattitude)+","+str(tv.destination_longtitude)+"&waypoints=via:"+str(i.pickup_lattitude)+","+str(i.pickup_longtitude)+"|via:"+str(i.destination_lattitude)+","+str(i.destination_longtitude)+"&key=AIzaSyD8j1ghThaDbCn_8FNv2CtXqAmMNSLje8M"
 				response = urlopen(url).read()
 				json_res = json.loads(response)
-				distance = json_res["routes"][0]["legs"][0]["distance"]["value"]/1000
-				LIST.append([tv.pk,i.pk,distance])
+				#if json_res["status"] == "OK":
+				#	return Response("hi")
+				if json_res["status"] == "OK":
+					distance = json_res["routes"][0]["legs"][0]["distance"]["value"]/1000
+					#return Response(distance)
+					LIST.append([tv.pk,i.pk,distance])
+				#return Response(distance)
 			LIST = sorted(LIST, key=lambda x: x[2])
 			return Response(LIST)
 		"""obj = Request.objects.all()

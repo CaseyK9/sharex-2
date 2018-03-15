@@ -46,12 +46,9 @@ class testSerializer(serializers.Serializer):
 
 
 class UserMatchListSerializer(serializers.Serializer):
-	class Meta:
-		model = Matching_List
-		fields = ('travel_id')
-			
-		"""sdgg"""
-		
+	travel_id = serializers.IntegerField()
+
+
 class UserMatchSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Matching
