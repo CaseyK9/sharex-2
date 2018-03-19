@@ -7,16 +7,12 @@ from rest_framework.response import Response
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.serializers import serialize
-
-class LazyEncoder(DjangoJSONEncoder):
-    def default(self, obj):
-        #if isinstance(obj, YourCustomType):
-         #   return str(obj)
-        return super().default(obj)
+import json
+from django.http import JsonResponse
 
 class GetTravel_List(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
-	queryset = Travel.objects.all()
+	queryset = Travel.objects.all()	
 	serializer_class = Travel_List_Serializer
 	permission_classes = (IsDriverAccount,)
 	def create(self,request):
@@ -26,8 +22,8 @@ class GetTravel_List(mixins.CreateModelMixin,
 				#tv_list = Travel.objects.get(account = request.user)
 				#json_res = json.loads(tv_list)
 				#data = serializers.serialize("xml", Travel.objects.filter(account = request.user))
-				data = serialize('json', Travel.objects.filter(account = request.user), cls=LazyEncoder)
-				return Response(data)
+				data = serialize('json', Travel.objects.filter(account = request.user))
+				return JsonResponse(json.dumps(data),safe = False)
 		else :
 			return Response("Unauthenticated")
 
