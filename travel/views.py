@@ -5,6 +5,15 @@ from .models import Travel
 from account.serializers import UserTravelSerializer,Travel_List_Serializer
 from rest_framework.response import Response
 from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core.serializers import serialize
+
+class LazyEncoder(DjangoJSONEncoder):
+    def default(self, obj):
+        #if isinstance(obj, YourCustomType):
+         #   return str(obj)
+        return super().default(obj)
+
 class GetTravel_List(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
 	queryset = Travel.objects.all()
@@ -16,7 +25,8 @@ class GetTravel_List(mixins.CreateModelMixin,
 			if serializer.is_valid():
 				#tv_list = Travel.objects.get(account = request.user)
 				#json_res = json.loads(tv_list)
-				data = serializers.serialize("xml", Travel.objects.filter(account = request.user))
+				#data = serializers.serialize("xml", Travel.objects.filter(account = request.user))
+				data = serialize('json', Travel.objects.filter(account = request.user), cls=LazyEncoder)
 				return Response(data)
 		else :
 			return Response("Unauthenticated")
