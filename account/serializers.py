@@ -48,6 +48,8 @@ class testSerializer(serializers.Serializer):
 class UserMatchListSerializer(serializers.Serializer):
 	travel_id = serializers.IntegerField()
 
+class Travel_List_Serializer(serializers.Serializer):
+	"""sdfgg"""
 
 class UserMatchSerializer(serializers.ModelSerializer):
 	class Meta:

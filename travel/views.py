@@ -2,8 +2,25 @@ from django.shortcuts import render
 from account.permissions import IsDriverAccount
 from rest_framework import viewsets, mixins
 from .models import Travel
-from account.serializers import UserTravelSerializer
+from account.serializers import UserTravelSerializer,Travel_List_Serializer
 from rest_framework.response import Response
+from django.core import serializers
+class GetTravel_List(mixins.CreateModelMixin,
+					    viewsets.GenericViewSet):
+	queryset = Travel.objects.all()
+	serializer_class = Travel_List_Serializer
+	permission_classes = (IsDriverAccount,)
+	def create(self,request):
+		if request.user.is_authenticated():
+			serializer = self.get_serializer(data=request.data)
+			if serializer.is_valid():
+				#tv_list = Travel.objects.get(account = request.user)
+				#json_res = json.loads(tv_list)
+				data = serializers.serialize("xml", Travel.objects.filter(account = request.user))
+				return Response(data)
+		else :
+			return Response("Unauthenticated")
+
 class GetTravelViewSet(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
 	queryset = Travel.objects.all()
