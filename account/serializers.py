@@ -16,7 +16,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Account
-		fields = ('email','password','first_name','last_name','tel','address','is_driver','personal_id','license')
+		fields = ('email','password','first_name','last_name','tel','address','is_driver','personal_id','license','status')
 
 
 class UserRequestSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class UserTravelSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Travel
-		fields = ('start_location','start_longtitude','car_id','start_lattitude','destination_location','destination_longtitude','destination_lattitude','current_longtitude','current_lattitude','is_complete')
+		fields = ('start_location','start_longtitude','car_id','start_lattitude','destination_location','destination_longtitude','destination_lattitude','current_longtitude','current_lattitude','status')
 
 
 class UseraddcarSerializer(serializers.ModelSerializer):

@@ -14,7 +14,7 @@ class Travel(models.Model):
 	current_longtitude = models.FloatField(max_length=255,blank=True,null=True)
 	current_lattitude = models.FloatField(max_length=255,blank=True,null=True)
 	
-	is_complete = models.BooleanField(default=False)
+	status = models.CharField(max_length=255,default="doing")
 
 	timestamp = models.DateTimeField(auto_now_add=True, db_index=True,null=True)
 	timeupdate = models.DateTimeField(auto_now=True)

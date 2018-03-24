@@ -77,7 +77,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     address = models.TextField(null=True, blank=True)
     is_driver = models.BooleanField(default=False)
     personal_id = models.CharField(max_length=30, null=True, blank=True)
-    
+    status = models.CharField(max_length=255,default="free")
     license = models.CharField(max_length=100, null=True, blank=True)
     
     is_admin = models.BooleanField(default=False)

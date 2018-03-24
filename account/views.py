@@ -69,6 +69,7 @@ class UserRegisterViewSet(mixins.CreateModelMixin,viewsets.GenericViewSet):
                 is_driver=serializer.data['is_driver'],
                 personal_id=serializer.data['personal_id'],
                 license=serializer.data['license'],
+                status = serializer.data['status']
             )
             account.set_password(serializer.data['password'])
             account.save()
