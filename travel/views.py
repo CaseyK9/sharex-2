@@ -51,7 +51,7 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 					destination_lattitude = serializer.data['destination_lattitude'],
 					current_longtitude = serializer.data['current_longtitude'],
 					current_lattitude = serializer.data['current_lattitude'],
-					is_complete = serializer.data['is_complete']
+					status = serializer.data['status']
 				)
 				tv.save()
 				LIST = {'details':[],'status':[]}
