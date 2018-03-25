@@ -13,7 +13,7 @@ from account.models import Account
 from .models import Request
 #from .authenticate import CsrfExemptSessionAuthentication
 from account.serializers import *
-from account.permissions import IsCustomerAccount
+from account.permissions import IsCustomerAccount,IsDriverAccount
 
 class GetRequestViewSet(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
@@ -42,5 +42,21 @@ class GetRequestViewSet(mixins.CreateModelMixin,
 			return Response(({'error':False,'content':'success'}))
 		else:
 			return Response({'error':True,'content' : 'failed'},status=status.HTTP_400_BAD_REQUEST)
-			
-# Create your views her
+
+
+class Get_Request_Detail(mixins.CreateModelMixin,
+					    viewsets.GenericViewSet):
+	queryset = Request.objects.all()
+	serializer_class = GetRequestDetail
+	permission_classes = (IsDriverAccount,)
+	def create(self,request):
+		serializer = self.get_serializer(data = request.data)
+		if serializer.is_valid():
+			rq = Request.objects.get(pk = serializer.data['request_id'])
+			if rq != None:
+				detail = {'details':[],'status':[]}
+				detail['details'].append({'pickup_location':rq.pickup_location,'pickup_longtitude':rq.pickup_longtitude,'pickup_lattitude':rq.pickup_lattitude,'destination_location':rq.destination_location,'destination_longtitude':rq.destination_longtitude,'destination_lattitude':rq.destination_lattitude,'receiver_name':rq.receiver_name,'receiver_tel':rq.receiver_tel,'receiver_address':rq.receiver_address,'type':rq._type})
+				detail['status'].append({'status':'okay'})
+				return Response(detail)
+			else:
+				return

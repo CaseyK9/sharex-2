@@ -59,6 +59,8 @@ class UserMatchSerializer(serializers.ModelSerializer):
 		fields = ('driver','customer','status')
 	
 			
-
+class GetRequestDetail(serializers.Serializer):
+	request_id = serializers.IntegerField()
+		
 		
 			
