@@ -55,25 +55,35 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 				)
 				tv.save()
 				LIST = {'details':[],'status':[]}
+				sort_list = []
+				tmp_list = []
 				#return Response(LIST)
 				j = 0
+				k = 0
 				#return Response(len(Request.objects.all()))
 				for i in Request.objects.all():
 					j+=1
 					url = "https://maps.googleapis.com/maps/api/directions/json?origin="+str(tv.start_lattitude)+","+str(tv.start_longtitude)+"&destination="+str(tv.destination_lattitude)+","+str(tv.destination_longtitude)+"&waypoints=via:"+str(i.pickup_lattitude)+","+str(i.pickup_longtitude)+"|via:"+str(i.destination_lattitude)+","+str(i.destination_longtitude)+"&key=AIzaSyD8j1ghThaDbCn_8FNv2CtXqAmMNSLje8M"
 					response = urlopen(url).read()
 					json_res = json.loads(response)
-					
 					if json_res["status"] == "OK":
 						distance = json_res["routes"][0]["legs"][0]["distance"]["value"]/1000
+						sort_list.append([k,distance])
+						k+=1
+						tmp_list.append({'request_id':i.pk,'travel_id':tv.pk,'distance':distance})
 						#return Response(distance)
-						LIST['details'].append({'id':j,'travel_id':tv.pk,'request_id':i.pk,'distance':distance})
+						
 						#return Response(json.dumps(LIST[j]))
 						#LIST.append([tv.pk,i.pk,distance])
 					#return Response(distance)
-
-				#LIST = sorted(LIST, key=lambda x: x[2])
-				LIST['status'].append('okay')
+				if len(sort_list)==0:
+					LIST['status'].append('no request')
+				else:
+					sort_list = sorted(sort_list, key=lambda x: x[1])
+					for i in range(0,k):
+						if i<5:
+							LIST['details'].append(tmp_list[k])
+					LIST['status'].append('okay')
 				return Response(LIST)
 
 			return Response(json_res)	

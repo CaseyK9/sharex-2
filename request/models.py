@@ -31,7 +31,7 @@ class Request(models.Model):
 
 	_type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES , default='1')
 	status = models.CharField(max_length=255,default="doing")
-
+	fare = models.IntegerField(default = 0)
 	timestamp = models.DateTimeField(auto_now_add=True, db_index=True,null=True)
 	timeupdate = models.DateTimeField(auto_now=True)
 
