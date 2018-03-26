@@ -78,6 +78,7 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 							temp_pickup = pickup[0]
 						if len(destination) >= 2:
 							temp_destination = destination[0]+destination[1]
+							temp_destination.replace(",","\n")
 						else:
 							temp_destination = destination[0]
 						tmp_list.append({'travel_id':tv.pk,'request_id':i.pk,'pickup_location':temp_pickup,'destination_location':temp_destination,'distance':distance,'fare':i.fare,'account_id':i.account.pk})

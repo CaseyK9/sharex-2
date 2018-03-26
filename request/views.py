@@ -56,7 +56,8 @@ class Get_Request_Detail(mixins.CreateModelMixin,
 			rq = Request.objects.get(pk = serializer.data['request_id'])
 			if rq != None:
 				detail = {'details':[],'status':[]}
-				detail['details'].append({'pickup_location':rq.pickup_location,'pickup_longtitude':rq.pickup_longtitude,'pickup_lattitude':rq.pickup_lattitude,'destination_location':rq.destination_location,'destination_longtitude':rq.destination_longtitude,'destination_lattitude':rq.destination_lattitude,'receiver_name':rq.receiver_name,'receiver_tel':rq.receiver_tel,'receiver_address':rq.receiver_address,'type':rq._type})
+				name = rq.account.first_name+" "+rq.account.last_name
+				detail['details'].append({'customer_name':name,'customer_tel':rq.account.tel,'pickup_location':rq.pickup_location,'pickup_longtitude':rq.pickup_longtitude,'pickup_lattitude':rq.pickup_lattitude,'destination_location':rq.destination_location,'destination_longtitude':rq.destination_longtitude,'destination_lattitude':rq.destination_lattitude,'receiver_name':rq.receiver_name,'receiver_tel':rq.receiver_tel,'receiver_address':rq.receiver_address,'type':rq._type})
 				detail['status'].append({'status':'okay'})
 				return Response(detail)
 			else:
