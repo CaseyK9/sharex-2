@@ -70,7 +70,17 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 						distance = json_res["routes"][0]["legs"][0]["distance"]["value"]/1000
 						sort_list.append([k,distance])
 						k+=1
-						tmp_list.append({'request_id':i.pk,'pickup_location':i.pickup_location,'destination_location':i.destination_location,'distance':distance,'travel_id':i.account.pk})
+						pickup = i.pickup_location.split(",")
+						destination = i.destination_location.split(",")
+						if len(pickup) >= 2:
+							temp_pickup = pickup[0]+pickup[1]
+						else:
+							temp_pickup = pickup[0]
+						if len(destination) >= 2:
+							temp_destination = destination[0]+destination[1]
+						else:
+							temp_destination = destination[0]
+						tmp_list.append({'request_id':i.pk,'pickup_location':temp_pickup,'destination_location':temp_destination,'distance':distance,'account_id':i.account.pk})
 						#return Response(distance)
 						
 						#return Response(json.dumps(LIST[j]))
