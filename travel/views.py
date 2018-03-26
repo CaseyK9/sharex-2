@@ -80,7 +80,7 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 							temp_destination = destination[0]+destination[1]
 						else:
 							temp_destination = destination[0]
-						tmp_list.append({'request_id':i.pk,'pickup_location':temp_pickup,'destination_location':temp_destination,'distance':distance,'account_id':i.account.pk})
+						tmp_list.append({'travel_id':tv.pk,'request_id':i.pk,'pickup_location':temp_pickup,'destination_location':temp_destination,'distance':distance,'fare':i.fare,'account_id':i.account.pk})
 						#return Response(distance)
 						
 						#return Response(json.dumps(LIST[j]))

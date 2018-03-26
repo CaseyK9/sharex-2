@@ -37,7 +37,7 @@ class GetRequestViewSet(mixins.CreateModelMixin,
 				receiver_address = serializer.data['receiver_address'],
 				_type = serializer.data['_type'],
 				status = serializer.data['status'],
-				fare = serializerd.data['fare']
+				fare = serializer.data['fare']
 			).save()
 			print(var_request)
 			return Response(({'error':False,'content':'success'}))
