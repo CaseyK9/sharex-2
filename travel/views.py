@@ -88,13 +88,13 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 						#LIST.append([tv.pk,i.pk,distance])
 					#return Response(distance)
 				if len(sort_list)==0:
-					LIST['status'].append('no request')
+					LIST['status'].append({'status':'no request'})
 				else:
 					sort_list = sorted(sort_list, key=lambda x: x[1])
 					for i in range(0,k):
 						if i<5:
 							LIST['details'].append(tmp_list[sort_list[i][0]])
-					LIST['status'].append('okay')
+					LIST['status'].append({'status': 'okay'})
 				return Response(LIST)
 
 			return Response(json_res)	
