@@ -82,7 +82,7 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 					sort_list = sorted(sort_list, key=lambda x: x[1])
 					for i in range(0,k):
 						if i<5:
-							LIST['details'].append(tmp_list[k])
+							LIST['details'].append(tmp_list[i])
 					LIST['status'].append('okay')
 				return Response(LIST)
 
