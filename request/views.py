@@ -36,7 +36,7 @@ class GetRequestViewSet(mixins.CreateModelMixin,
 				receiver_tel = serializer.data['receiver_tel'],
 				receiver_address = serializer.data['receiver_address'],
 				_type = serializer.data['_type'],
-				status = serializer.data['status'],
+				#status = serializer.data['status'],
 				fare = serializer.data['fare']
 			).save()
 			print(var_request)

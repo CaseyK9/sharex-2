@@ -23,7 +23,7 @@ class UserRequestSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Request
-		exclude = ('account',)
+		exclude = ('account','status')
 
 class UserTravelSerializer(serializers.ModelSerializer):
 
