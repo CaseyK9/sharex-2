@@ -22,11 +22,14 @@ class GetMatchViewSet(mixins.CreateModelMixin,
 		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid():
 			driver_obj = Account.objects.get(pk = serializer.data['driver'])
+			driver_obj.status = "busy"
+			driver_obj.save()
 			customer_obj = Account.objects.get(pk = serializer.data['customer'])
 			var_request = Matching.objects.create(
 				driver = driver_obj,
 				customer = customer_obj
 			).save()
+
 			print(var_request)
 			return Response("done")
 		else:
