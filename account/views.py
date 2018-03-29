@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from django.http import JsonResponse
 from .models import Account
-from matching import Matching
+from matching.models import Matching
 #from .authenticate import CsrfExemptSessionAuthentication
 from .serializers import *
 from .permissions import IsAuthenticated
