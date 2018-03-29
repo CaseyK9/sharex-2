@@ -16,7 +16,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Account
-		fields = ('email','password','first_name','last_name','tel','address','is_driver','personal_id','license','status')
+		fields = ('email','password','first_name','last_name','tel','address','is_driver','personal_id','license')
 
 
 class UserRequestSerializer(serializers.ModelSerializer):

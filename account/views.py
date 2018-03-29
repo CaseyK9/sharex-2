@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from django.http import JsonResponse
 from .models import Account
+from matching import Matching
 #from .authenticate import CsrfExemptSessionAuthentication
 from .serializers import *
 from .permissions import IsAuthenticated
@@ -48,8 +49,14 @@ class UserLoginViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
             # response = UserAccountSerializer(user).data
             obj = Token.objects.get(user=user)
+            detail = []
+            if user.status == "busy":
+                for i in Matching.objects.all():
+                    if i.driver == request:
+                        detail.append({'matching_id':i.pk})
+                
             
-            return Response({'Token':obj.key,'is_driver':str(user.is_driver)}, status=status.HTTP_200_OK)
+            return Response({'Token':obj.key,'is_driver':str(user.is_driver),'acoount_status':str(user.status),'acount_id':str(user.pk),'detail':detail}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -70,7 +77,7 @@ class UserRegisterViewSet(mixins.CreateModelMixin,viewsets.GenericViewSet):
                 is_driver=serializer.data['is_driver'],
                 personal_id=serializer.data['personal_id'],
                 license=serializer.data['license'],
-                status = serializer.data['status']
+                #status = serializer.data['status']
             )
             account.set_password(serializer.data['password'])
             account.save()

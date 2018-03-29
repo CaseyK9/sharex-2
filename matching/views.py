@@ -9,7 +9,9 @@ from .models import Matching_List
 from account.serializers import UserMatchListSerializer,UserMatchSerializer
 from rest_framework.response import Response
 from django.core import serializers
+from account.models import Account
 import json
+
 
 class GetMatchViewSet(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
@@ -19,9 +21,11 @@ class GetMatchViewSet(mixins.CreateModelMixin,
 	def create(self,request):
 		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid():
+			driver_obj = Account.objects.get(pk = serializer.data['driver'])
+			customer_obj = Account.objects.get(pk = serializer.data['customer'])
 			var_request = Matching.objects.create(
-				driver = serializer.data['driver'],
-				customer = serializer.data['customer'],
+				driver = driver_obj,
+				customer = customer_obj
 			).save()
 			print(var_request)
 			return Response("done")
