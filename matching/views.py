@@ -28,8 +28,8 @@ class GetMatchViewSet(mixins.CreateModelMixin,
 			travel_obj.account.save()
 			request_obj = Request.objects.get(pk = serializer.data['request'])
 			var_request = Matching.objects.create(
-				travel = travel_obj,
-				request = request_obj
+				travel_data = travel_obj,
+				request_data = request_obj
 			).save()
 
 			print(var_request)

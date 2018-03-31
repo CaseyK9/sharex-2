@@ -8,8 +8,8 @@ from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUserna
 
 
 class Matching(models.Model):
-	travel = models.ForeignKey(settings.TRAVEL,blank=True,null=True)
-	request = models.ForeignKey(settings.REQUEST,blank=True,null=True)
+	travel_data = models.ForeignKey(settings.TRAVEL,blank=True,null=True)
+	request_data = models.ForeignKey(settings.REQUEST,blank=True,null=True)
 
 	status = models.CharField(max_length=255,default="doing")
 
