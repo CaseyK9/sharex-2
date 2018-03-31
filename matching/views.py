@@ -48,7 +48,7 @@ class GetMatchViewSet(mixins.CreateModelMixin,
 			var_request = Matching.objects.create(
 				travel_data = travel_obj,
 				request_data = request_obj,
-				lumbub = 
+				#lumbub = 
 			).save()
 
 			print(var_request)
