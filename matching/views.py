@@ -24,10 +24,10 @@ class GetMatching_Detail(mixins.CreateModelMixin,
 		if serializer.is_valid():
 			mc = Matching.objects.get(pk = serializer.data['matching_id'])
 			if mc != None:
-				detail = {'details':[]}
+				detail = {'travel':[],'request':[]}
 				#name = rq.account.first_name+" "+rq.account.last_name
-				detail['details'].append({'travel':[{'start_location':mc.travel_data.start_location,'start_longtitude':mc.travel_data.start_longtitude,'start_lattitude':mc.travel_data.start_lattitude,'car_id':mc.travel_data.car_id,'destination_location':mc.travel_data.destination_location,'destination_longtitude':mc.travel_data.destination_longtitude,'destination_lattitude':mc.travel_data.destination_lattitude,'status':mc.travel_data.status}]})
-				detail['details'].append({'request':[{'pickup_location':mc.request_data.pickup_location,'pickup_longtitude':mc.request_data.pickup_longtitude,'pickup_lattitude':mc.request_data.pickup_lattitude,'receiver_name':mc.request_data.receiver_name,'receiver_tel':mc.request_data.receiver_tel,'receiver_address':mc.request_data.receiver_address,'destination_location':mc.request_data.destination_location,'destination_longtitude':mc.request_data.destination_longtitude,'destination_lattitude':mc.request_data.destination_lattitude,'status':mc.request_data.status,'_type':mc.request_data._type,'fare':mc.request_data.fare}]})
+				detail['travel'].append({'travel_id':mc.travel_data.pk,'start_location':mc.travel_data.start_location,'start_longtitude':mc.travel_data.start_longtitude,'start_lattitude':mc.travel_data.start_lattitude,'car_id':mc.travel_data.car_id,'destination_location':mc.travel_data.destination_location,'destination_longtitude':mc.travel_data.destination_longtitude,'destination_lattitude':mc.travel_data.destination_lattitude,'status':mc.travel_data.status})
+				detail['request'].append({'request_id':mc.request_data.pk,'pickup_location':mc.request_data.pickup_location,'pickup_longtitude':mc.request_data.pickup_longtitude,'pickup_lattitude':mc.request_data.pickup_lattitude,'receiver_name':mc.request_data.receiver_name,'receiver_tel':mc.request_data.receiver_tel,'receiver_address':mc.request_data.receiver_address,'destination_location':mc.request_data.destination_location,'destination_longtitude':mc.request_data.destination_longtitude,'destination_lattitude':mc.request_data.destination_lattitude,'status':mc.request_data.status,'_type':mc.request_data._type,'fare':mc.request_data.fare,'first_name':mc.request_data.account.first_name,'last_name':request_data.account.last_name,'tel':request_data.account.tel,'address':request_data.account.address})
 				return Response(detail)
 			else:
 				return Response({'error':True,'content' : 'failed'},status=status.HTTP_400_BAD_REQUEST)
@@ -47,7 +47,8 @@ class GetMatchViewSet(mixins.CreateModelMixin,
 			request_obj = Request.objects.get(pk = serializer.data['request'])
 			var_request = Matching.objects.create(
 				travel_data = travel_obj,
-				request_data = request_obj
+				request_data = request_obj,
+				lumbub = 
 			).save()
 
 			print(var_request)
