@@ -56,7 +56,7 @@ class Travel_List_Serializer(serializers.ModelSerializer):
 class UserMatchSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Matching
-		fields = ('driver','customer','status')
+		fields = ('travel_data','request_data')
 	
 			
 class GetRequestDetail(serializers.Serializer):
