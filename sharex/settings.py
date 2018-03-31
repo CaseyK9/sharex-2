@@ -28,6 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'account.Account'
+TRAVEL = 'travel.Travel'
+REQUEST = 'request.REQUEST'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
