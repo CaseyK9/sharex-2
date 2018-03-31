@@ -23,6 +23,7 @@ router.register(r'test',test_Token)
 
 router.register(r'get-request',GetRequestViewSet)
 router.register(r'get-travel',GetTravelViewSet)
+router.register(r'get-matching-detail',GetMatching_Detail)
 #router.register(r'get-list-match',GetList_Match_ViewSet)
 router.register(r'get-request-detail',Get_Request_Detail)
 router.register(r'get-list-travel',GetTravel_List)

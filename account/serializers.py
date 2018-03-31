@@ -58,8 +58,9 @@ class UserMatchSerializer(serializers.Serializer):
 	request = serializers.IntegerField()
 	
 			
+class GetMatchingDetail(serializers.Serializer):
+	matching_id = serializers.IntegerField()
+
+
 class GetRequestDetail(serializers.Serializer):
 	request_id = serializers.IntegerField()
-		
-		
-			
