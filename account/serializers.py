@@ -53,10 +53,9 @@ class Travel_List_Serializer(serializers.ModelSerializer):
 		model = Travel
 		fields= '__all__'
 
-class UserMatchSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Matching
-		fields = ('travel','request')
+class UserMatchSerializer(serializers.Serializer):
+	travel = serializers.IntegerField()
+	request = serializers.IntegerField()
 	
 			
 class GetRequestDetail(serializers.Serializer):
