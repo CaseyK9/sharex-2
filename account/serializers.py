@@ -65,13 +65,15 @@ class GetMatchingDetail(serializers.Serializer):
 class GetRequestDetail(serializers.Serializer):
 	request_id = serializers.IntegerField()
 
-
+class GetMultipleMatching_Sub(serializers.Serializer):
+	request_id = serializers.IntegerField()
 
 class GetMultipleMatching(serializers.Serializer):
+	#import GetMultipleMatching_Sub
 	travel_id = serializers.IntegerField()
 	request_list = GetMultipleMatching_Sub(many=True)
 
 
-class GetMultipleMatching_Sub(serializers.Serializer):
-	request_id = serializers.IntegerField()
+
+
 		
