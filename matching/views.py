@@ -6,7 +6,7 @@ from travel.models import Travel
 from urllib.request import urlopen
 from .models import Matching
 from .models import Matching_List
-from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail
+from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail,GetMultipleMatching,GetMultipleMatching_Sub
 from rest_framework.response import Response
 from django.core import serializers
 from travel.models import Travel
@@ -56,3 +56,15 @@ class GetMatchViewSet(mixins.CreateModelMixin,
 			return Response("done")
 		else:
 			return Response({'error':True,'content' : 'failed'},status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class Get_Multiple_Matching(mixins.CreateModelMixin,
+					    viewsets.GenericViewSet):
+	queryset = Matching.objects.all()
+	serializer_class = GetMultipleMatching
+	permission_classes =  (IsDriverAccount,IsAuthenticated,)
+	def create(self,request):
+		serializer = self.get_serializer(data=request_data)
+		if serializer.is_valid():
+			return Response(serializer.data['request_list'])
