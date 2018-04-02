@@ -12,7 +12,7 @@ from travel.models import Travel
 from request.models import Request
 from account.models import Account
 import json
-import requests
+from requests import requests
 
 class GetMatching_Detail(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
