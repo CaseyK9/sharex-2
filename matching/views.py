@@ -5,7 +5,6 @@ from request.models import Request
 from travel.models import Travel
 from urllib.request import urlopen
 from .models import Matching
-from .models import Matching_List
 from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail,GetMultipleMatching,GetMultipleMatching_Sub
 from rest_framework.response import Response
 from django.core import serializers
@@ -13,6 +12,7 @@ from travel.models import Travel
 from request.models import Request
 from account.models import Account
 import json
+import base64
 
 class GetMatching_Detail(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
@@ -65,6 +65,24 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 	serializer_class = GetMultipleMatching
 	permission_classes =  (IsDriverAccount,IsAuthenticated,)
 	def create(self,request):
-		serializer = self.get_serializer(data=request_data)
+		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid():
-			return Response(serializer.data['request_list'])
+			location=[]
+
+			j = len(serializer.data['request_list'])
+			for i in range(0,j,1):
+				if i==0:
+					tmp = Travel.objects.get(pk = serializer.data['travel_id'])
+					loaction.append({'address':'start','lat':str(tmp.start_lattitude),'lng':str(tmp.start_longtitude)})
+				tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
+				loaction.append({'address':tmp.pk,'lat':str(tmp.pickup_lattitude),'lng':str(tmp.pickup_longtitude)})
+				loaction.append({'address':tmp.pk,'lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude),'restrictions':{'after':(i*2)+1}})
+				if i==j-1:
+					tmp = Travel.objects.get(pk = serializer.data['travel_id'])
+					loaction.append({'address':'start','lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude)})
+			url = 'https://api.routexl.nl/tour/'
+			payload = {'location':location}
+			headers = {'Authorization':'Basic'+base64.b64encode('sharexserver:sharexadmin')}
+			r = requests.post(url, data=json.dumps(payload), headers=headers)
+			return Response(r.text)
+		else: return Response("400")
