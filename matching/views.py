@@ -82,7 +82,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					location.append({'address':'start','lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude)})
 			url = 'https://api.routexl.nl/tour/'
 			payload = {'location':location}
-			headers = {'Authorization':"Basic"+str(base64.b64encode('sharexserver:sharexadmin')),}
+			headers = {'Authorization':"Basic c2hhcmV4c2VydmVyOnNoYXJleGFkbWlu"}
 			r = requests.post(url, data=json.dumps(payload), headers=headers)
 			return Response(r.text)
 		else: return Response("400")
