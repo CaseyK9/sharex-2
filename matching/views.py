@@ -83,6 +83,6 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 			url = 'https://api.routexl.nl/tour/'
 			payload = {'location':location}
 			headers = {'Authorization':"Basic c2hhcmV4c2VydmVyOnNoYXJleGFkbWlu"}
-			r = requests.post(url, data=payload, headers=headers)
-			return Response(payload)
+			r = requests.post(url, data=dumps(payload), headers=headers)
+			return Response(dumps(payload))
 		else: return Response("400")
