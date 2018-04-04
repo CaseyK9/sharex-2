@@ -84,5 +84,5 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 			payload = {'locations':json.dumps(location)}
 			headers = {'Authorization':"Basic c2hhcmV4c2VydmVyOnNoYXJleGFkbWlu"}
 			r = requests.post(url, data=payload, headers=headers)
-			return Response(r)
+			return Response(r.text['id'])
 		else: return Response("400")
