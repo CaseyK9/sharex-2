@@ -111,7 +111,6 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 				)
 
 				#tt = Matching.objects.filter(travel_data = travel_obj,sequence = message)
-				return Response(var_matching.pk)
 				response_message['matching_id'].append(var_matching.pk)
 				return Response(response_message)
 			return Response(json.loads(r.text))
