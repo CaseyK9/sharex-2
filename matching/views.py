@@ -110,7 +110,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					sequence = message
 				).save()
 
-				return Response(var_matching)
+				return Response(var_matching.pk)
 				response_message['matching_id'].append(var_matching.pk)
 				return Response(response_message)
 			return Response(json.loads(r.text))
