@@ -70,19 +70,24 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 			location=[]
 
 			j = len(serializer.data['request_list'])
-			for i in range(0,j,1):
-				if i==0:
-					tmp = Travel.objects.get(pk = serializer.data['travel_id'])
-					location.append({'address':'start','lat':str(tmp.start_lattitude),'lng':str(tmp.start_longtitude)})
-				tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
-				location.append({'address':str(tmp.pk),'lat':str(tmp.pickup_lattitude),'lng':str(tmp.pickup_longtitude)})
-				location.append({'address':str(tmp.pk),'lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude),'restrictions':{'after':(i*2)+1}})
-				if i==j-1:
-					tmp = Travel.objects.get(pk = serializer.data['travel_id'])
-					location.append({'address':'start','lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude)})
-			url = 'https://api.routexl.nl/tour/'
-			payload = {'locations':json.dumps(location)}
-			headers = {'Authorization':"Basic c2hhcmV4c2VydmVyOnNoYXJleGFkbWlu"}
-			r = requests.post(url, data=payload, headers=headers)
+			if j==0:
+				return Response("no list")
+			else:
+				for i in range(0,j,1):
+					if i==0:
+						tmp = Travel.objects.get(pk = serializer.data['travel_id'])
+						location.append({'address':'start','lat':str(tmp.start_lattitude),'lng':str(tmp.start_longtitude)})
+					tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
+					location.append({'address':str(tmp.pk),'lat':str(tmp.pickup_lattitude),'lng':str(tmp.pickup_longtitude)})
+					location.append({'address':str(tmp.pk),'lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude),'restrictions':{'after':(i*2)+1}})
+					if i==j-1:
+						tmp = Travel.objects.get(pk = serializer.data['travel_id'])
+						location.append({'address':'start','lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude)})
+				url = 'https://api.routexl.nl/tour/'
+				payload = {'locations':json.dumps(location)}
+				headers = {'Authorization':"Basic c2hhcmV4c2VydmVyOnNoYXJleGFkbWlu"}
+				r = requests.post(url, data=payload, headers=headers)
+				temp = json.loads(r.text)
+				return Response(temp)
 			return Response(json.loads(r.text))
 		else: return Response("400")
