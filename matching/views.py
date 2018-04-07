@@ -106,9 +106,9 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 				var_matching = Matching.objects.create(
 					travel_data = travel_obj,
 					sequence = message
-				)
+				)	
 				tt = var_matching.save()
-				return Response(tt.pk)
+				return Response(tt.id)
 				response_message['matching_id'].append(var_matching.pk)
 				return Response(response_message)
 			return Response(json.loads(r.text))
