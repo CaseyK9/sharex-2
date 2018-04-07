@@ -78,11 +78,11 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 			else:
 				response_message['travel_id'].append(travel_obj.pk)
 				travel_obj.account.status = "busy"
-				for i in range(0,j,1):
+				for i in range(0,j+1,1):
 					if i==0:
 						tmp = Travel.objects.get(pk = serializer.data['travel_id'])
 						location.append({'address':'start','lat':str(tmp.start_lattitude),'lng':str(tmp.start_longtitude)})
-					if i==j-1:
+					if i==j:
 						tmp = Travel.objects.get(pk = serializer.data['travel_id'])
 						location.append({'address':'stop','lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude)})
 					else:
@@ -108,6 +108,6 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					sequence = message
 				).save()
 
-				return Response(payload['locations'])
+				return Response(response_message)
 			return Response(json.loads(r.text))
 		else: return Response("400")
