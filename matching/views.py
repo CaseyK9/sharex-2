@@ -78,11 +78,11 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 						tmp = Travel.objects.get(pk = serializer.data['travel_id'])
 						location.append({'address':'start','lat':str(tmp.start_lattitude),'lng':str(tmp.start_longtitude)})
 					tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
-					location.append({'address':str(tmp.pk),'lat':str(tmp.pickup_lattitude),'lng':str(tmp.pickup_longtitude)})
-					location.append({'address':str(tmp.pk),'lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude),'restrictions':{'after':(i*2)+1}})
+					location.append({'address':str(tmp.pk)+"a",'lat':str(tmp.pickup_lattitude),'lng':str(tmp.pickup_longtitude)})
+					location.append({'address':str(tmp.pk)+"b",'lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude),'restrictions':{'after':(i*2)+1}})
 					if i==j-1:
 						tmp = Travel.objects.get(pk = serializer.data['travel_id'])
-						location.append({'address':'start','lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude)})
+						location.append({'address':'stop','lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude)})
 				url = 'https://api.routexl.nl/tour/'
 				payload = {'locations':json.dumps(location)}
 				headers = {'Authorization':"Basic c2hhcmV4c2VydmVyOnNoYXJleGFkbWlu"}
