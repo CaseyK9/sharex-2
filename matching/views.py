@@ -66,14 +66,16 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 	permission_classes =  (IsDriverAccount,IsAuthenticated,)
 	def create(self,request):
 		serializer = self.get_serializer(data=request.data)
+		travel_obj = Travel.objects.get(pk = serializer.data['travel_id'])
 		if serializer.is_valid():
 			location=[]
-
+			if travel_obj.account.status == "busy":
+				return Response("Driver is busy")
 			j = len(serializer.data['request_list'])
 			if j==0:
 				return Response("no list")
 			else:
-				travel_obj = Travel.objects.get(pk = serializer.data['travel_id'])
+				
 				travel_obj.account.status = "busy"
 				for i in range(0,j,1):
 					if i==0:
@@ -84,7 +86,8 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 						location.append({'address':'stop','lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude)})
 					else:
 						tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
-						
+						if tmp.status == "matched":
+							return Response("Unavailable request")
 						tmp.status = "matched"
 						tmp.save()
 
