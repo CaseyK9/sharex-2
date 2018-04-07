@@ -96,7 +96,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 				r = requests.post(url, data=payload, headers=headers)
 				temp = json.loads(r.text)
 				for i in range(1,temp['count']-1,1):
-					message = temp['route'][str(i)]['address']+"->"
+					message = temp['route'][str(i)]['name']+"->"
 				var_matching = Matching.objects.create(
 					travel_data = travel_obj,
 					sequence = message
