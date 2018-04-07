@@ -100,7 +100,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 				message = ""
 				for i in range(1,temp['count']-1,1):
 					if temp['route'][str(i)]['name'][len(temp['route'][str(i)]['name'])-2] == 'a':
-						rq_id = int(temp['route'][str(i)]['name'][:(len(temp['route'][str(i)]['name'])-1)])
+						rq_id = int(temp['route'][str(i)]['name'][:(len(temp['route'][str(i)]['name'])-2)])
 						response_message['sequence'].append({'request_id':rq_id,'status':'pickup','complete':False})
 					message = message+temp['route'][str(i)]['name']+"->"
 				var_matching = Matching.objects.create(
