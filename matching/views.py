@@ -108,6 +108,6 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					sequence = message
 				).save()
 
-				return Response(message)
+				return Response(temp)
 			return Response(json.loads(r.text))
 		else: return Response("400")
