@@ -65,7 +65,7 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 				k = 0
 				#return Response(len(Request.objects.all()))
 				for i in Request.objects.all():
-					if i.status == 'doing'
+					if i.status == "doing":
 						url = "https://maps.googleapis.com/maps/api/directions/json?origin="+str(tv.start_lattitude)+","+str(tv.start_longtitude)+"&destination="+str(tv.destination_lattitude)+","+str(tv.destination_longtitude)+"&waypoints=via:"+str(i.pickup_lattitude)+","+str(i.pickup_longtitude)+"|via:"+str(i.destination_lattitude)+","+str(i.destination_longtitude)+"&key=AIzaSyD8j1ghThaDbCn_8FNv2CtXqAmMNSLje8M"
 						response = urlopen(url).read()
 						json_res = json.loads(response)
