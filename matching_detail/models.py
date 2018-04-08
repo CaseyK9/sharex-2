@@ -6,15 +6,15 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, PermissionsMixin, Permission)
 from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUsernameValidator
 
-
-class Matching(models.Model):
-	travel_data = models.ForeignKey(settings.TRAVEL,blank=True,null=True)
+class Matching_Detail(models.Model):
+	matching = models.ForeignKey(settings.MATCHING,blank=True,null=True)
+	travel = models.ForeignKey(settings.TRAVEL,blank=True,null=True)
+	request = models.ForeignKey(settings.Request,blank=True,null=True)
 	#request_data = models.ForeignKey(settings.REQUEST,blank=True,null=True)
-	current_station = models.IntegerField(default=0,blank=True,null=True)
-	sequence = models.CharField(max_length=255,blank=True,null=True)
+	signatute = models.ImageField(upload_to='signature_profile',blank=True)
 	status = models.CharField(max_length=255,default="doing")
 
 	timestamp = models.DateTimeField(auto_now_add=True, db_index=True,null=True)
 	timeupdate = models.DateTimeField(auto_now=True)
-	
-		
+
+# Create your models here.

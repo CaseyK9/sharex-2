@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'account.Account'
 TRAVEL = 'travel.Travel'
 REQUEST = 'request.REQUEST'
+MATCHING = 'matching.MATCHING'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'car',
     'travel',
     'matching',
+   # 'matching_detail',
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',

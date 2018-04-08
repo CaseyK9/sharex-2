@@ -71,10 +71,10 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 			response_message = {'matching_id':[],'travel_id':[],'sequence':[],'details':[]}
 			travel_obj = Travel.objects.get(pk = serializer.data['travel_id'])
 			if travel_obj.account.status == "busy":
-				return Response("Driver is busy")
+				return Response({'status':'Driver is busy'})
 			j = len(serializer.data['request_list'])
 			if j==0:
-				return Response("no list")
+				return Response({'status':'no list'})
 			else:
 				response_message['travel_id'].append(travel_obj.pk)
 				for i in range(0,j+1,1):
@@ -88,7 +88,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 						tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
 						response_message['details'].append({'request_id':tmp.pk,'customer_name':tmp.account.first_name,'customer_tel':tmp.account.tel,'pickup_location':tmp.pickup_location,'pickup_longtitude':tmp.pickup_longtitude,'pickup_lattitude':tmp.pickup_lattitude,'destination_location':tmp.destination_location,'destination_longtitude':tmp.destination_longtitude,'destination_lattitude':tmp.destination_lattitude,'receiver_name':tmp.receiver_name,'receiver_tel':tmp.receiver_tel,'receiver_address':tmp.receiver_address,'type':tmp._type,'fare':tmp.fare})
 						if tmp.status == "matched":
-							return Response("Unavailable request")
+							return Response({'status'='Unavailable request'})
 						location.append({'address':str(tmp.pk)+"a0",'lat':str(tmp.pickup_lattitude),'lng':str(tmp.pickup_longtitude)})
 						location.append({'address':str(tmp.pk)+"b0",'lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude),'restrictions':{'after':(i*2)+1}})
 				url = 'https://api.routexl.nl/tour/'
@@ -108,19 +108,49 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					message = message+temp['route'][str(i)]['name']+"->"
 
 
-				for i in range(0,len(serializer.data['request_list']),1):
-					tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
-					tmp.status = "matched"
-					tmp.save()
-
+				
 				var_matching = Matching.objects.create(
 					travel_data = travel_obj,
 					sequence = message
 				)
+				for i in range(0,len(serializer.data['request_list']),1):
+					tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
+					mc_dt = Matching_Detail.objects.create(
+						matching = var_matching,
+						travel = travel_obj,
+						request = tmp,
+						status = 'matched'
+					)
+					tmp.status = "matched"
+					tmp.save()
+
 				travel_obj.account.status = "busy"
 				travel_obj.save()
 				#tt = Matching.objects.filter(travel_data = travel_obj,sequence = message)
 				response_message['matching_id'].append(var_matching.pk)
 				return Response(response_message)
 			return Response(json.loads(r.text))
-		else: return Response("400")
+		else: return Response({'status':'serializer unvalid'})
+
+
+class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
+	queryset = Matching.objects.all()
+	serializer_class = UpdateMatchingStation
+	permission_classes = (IsDriverAccount,IsAuthenticated,)
+	def create(self,request):
+		serializer = self.get_serializer(data=request.data)
+		if serializer.is_valid():
+			mc_obj = Matching.objects.filter(pk = serializer.data['matching_id'])
+			if mc_obj.current_station == len(mc_obj.sequence.split('->')-1): #success traveling
+				mc_obj.travel_data.status = 'done';
+				mc_obj.travel_data.account.status = 'free';
+				for i in range(0,len(mc_obj.sequence.split("->"))-1,1):
+					rq_obj = Request.objects.filter(pk = int(mc_obj.sequence.split("->")[i][0:len(mc_obj.sequence.split("->")[i])-1]))
+					rq_obj.status = 'done'
+					rq_obj.save()
+				mc_obj.save()
+			elif mc_obj.current_station == 0:
+				mc_obj.current_station = mc_obj.current_station+1;
+				mc_obj.save()
+	
+		

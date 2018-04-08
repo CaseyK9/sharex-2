@@ -25,7 +25,7 @@ class GetRequestViewSet(mixins.CreateModelMixin,
 		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid():
 			var_request = Request.objects.create(
-				account = request.user,
+				account = request.user,	
 				pickup_location = serializer.data['pickup_location'],
 				pickup_longtitude = serializer.data['pickup_longtitude'],
 				pickup_lattitude = serializer.data['pickup_lattitude'],
