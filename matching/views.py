@@ -141,7 +141,7 @@ class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
 		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid():
 			mc_obj = Matching.objects.get(pk=serializer.data['matching_id'])
-			if mc_obj.current_station == len(mc_obj.sequence.split('->')-1): #success traveling
+			if mc_obj.current_station == len(mc_obj.sequence.split('->'))-1: #success traveling
 				mc_obj.travel_data.status = 'done';
 				mc_obj.travel_data.account.status = 'free';
 				for i in range(0,len(mc_obj.sequence.split("->"))-1,1):
