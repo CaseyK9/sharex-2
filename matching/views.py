@@ -77,7 +77,6 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 				return Response("no list")
 			else:
 				response_message['travel_id'].append(travel_obj.pk)
-				travel_obj.account.status = "busy"
 				for i in range(0,j+1,1):
 					if i==0:
 						tmp = Travel.objects.get(pk = serializer.data['travel_id'])
@@ -98,18 +97,28 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 				r = requests.post(url, data=payload, headers=headers)
 				temp = json.loads(r.text)
 				message = ""
+
 				for i in range(1,temp['count']-1,1):
 					if temp['route'][str(i)]['name'][len(temp['route'][str(i)]['name'])-2] == 'a':
 						rq_id = int(temp['route'][str(i)]['name'][:(len(temp['route'][str(i)]['name'])-2)])
 						response_message['sequence'].append({'request_id':rq_id,'status':'pickup','complete':False})
+					elif temp['route'][str(i)]['name'][len(temp['route'][str(i)]['name'])-2] == 'b':
+						rq_id = int(temp['route'][str(i)]['name'][:(len(temp['route'][str(i)]['name'])-2)])
+						response_message['sequence'].append({'request_id':rq_id,'status':'dropoff','complete':False})
 					message = message+temp['route'][str(i)]['name']+"->"
 
+
+				for i in range(0,len(serializer.data['request_list']),1):
+					tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
+					tmp.status = "matched"
+					tmp.save()
 
 				var_matching = Matching.objects.create(
 					travel_data = travel_obj,
 					sequence = message
 				)
-
+				travel_obj.account.status = "busy"
+				travel_obj.save()
 				#tt = Matching.objects.filter(travel_data = travel_obj,sequence = message)
 				response_message['matching_id'].append(var_matching.pk)
 				return Response(response_message)
