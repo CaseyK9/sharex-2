@@ -83,7 +83,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     
-    
+    firebase_key = models.CharField(max_length=255,blank=True,null=True)
 
     last_active = models.DateTimeField(_('last active'), blank=True, null=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)

@@ -66,7 +66,7 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 				#return Response(len(Request.objects.all()))
 				for i in Request.objects.all():
 					if i.status == "doing":
-						if i.expire_time > timezone.now():
+						if i.expire_time < timezone.now():
 							i.status = 'expire'
 							i.save()
 						else:
