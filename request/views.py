@@ -37,7 +37,8 @@ class GetRequestViewSet(mixins.CreateModelMixin,
 				receiver_address = serializer.data['receiver_address'],
 				_type = serializer.data['_type'],
 				#status = serializer.data['status'],
-				fare = serializer.data['fare']
+				fare = serializer.data['fare'],
+				expire_time = timezone.now()+timezone.timedelta(days=serializer.data['expire_date'])
 			).save()
 			print(var_request)
 			return Response(({'error':False,'content':'success'}))
@@ -62,3 +63,17 @@ class Get_Request_Detail(mixins.CreateModelMixin,
 				return Response(detail)
 			else:
 				return
+
+
+class Get_Request_History(mixins.CreateModelMixin,
+					    viewsets.GenericViewSet):
+	queryset = Request.objects.all()
+	serializer_class = GetRequestHistory
+	permission_classes = (IsCustomerAccount,)
+	def create(self,request):
+		serializer = self.get_serializer(data = request.data)
+		if serializer.is_valid():
+			rq_list = {}
+			for i in Request.objects.all():
+				if request.user == i.account:
+					return Response({})

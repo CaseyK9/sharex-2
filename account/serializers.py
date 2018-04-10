@@ -19,8 +19,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 		fields = ('email','password','first_name','last_name','tel','address','is_driver','personal_id','license')
 
 
-class UserRequestSerializer(serializers.ModelSerializer):
-
+class UserRequestSerializer(serializers.ModelSerializer,serializers.Serializer):
+	expire_date = serializers.IntegerField()
 	class Meta:
 		model = Request
 		exclude = ('account','status')
@@ -76,6 +76,13 @@ class GetMultipleMatching(serializers.Serializer):
 class UpdateMatchingStation(serializers.Serializer):
 	#import GetMultipleMatching_Sub
 	matching_id = serializers.IntegerField()
+
+class GetRequestHistory(serializers.Serializer):
+	account_id = serializers.IntegerField()
+	"""docstring for GetRequestHistory"serializers.Serializerf __init__(self, arg):
+		super(GetRequestHistory,serializers.Serializer.__init__()
+		self.arg = arg
+		
 	
 
 

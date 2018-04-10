@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+from datetime import timedelta
 
 class Request(models.Model):
 	account = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
@@ -32,8 +33,7 @@ class Request(models.Model):
 	_type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES , default='1')
 	status = models.CharField(max_length=255,default="doing")
 	fare = models.IntegerField(default = 0)
-	timestamp = models.DateTimeField(auto_now_add=True, db_index=True,null=True)
-	timeupdate = models.DateTimeField(auto_now=True)
+	expire_time = models.DateTimeField(_('expire'), default=timezone.now()+timezone.timedelta(days=1))
 
 	def __str__(self):
 		return self.account.email if self.account.email else "" 

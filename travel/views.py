@@ -11,7 +11,7 @@ import json
 from django.http import JsonResponse
 from request.models import Request
 from urllib.request import urlopen
-
+from django.utils import timezone, six
 
 
 class GetTravel_List(mixins.CreateModelMixin,
@@ -66,29 +66,33 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 				#return Response(len(Request.objects.all()))
 				for i in Request.objects.all():
 					if i.status == "doing":
-						url = "https://maps.googleapis.com/maps/api/directions/json?origin="+str(tv.start_lattitude)+","+str(tv.start_longtitude)+"&destination="+str(tv.destination_lattitude)+","+str(tv.destination_longtitude)+"&waypoints=via:"+str(i.pickup_lattitude)+","+str(i.pickup_longtitude)+"|via:"+str(i.destination_lattitude)+","+str(i.destination_longtitude)+"&key=AIzaSyD8j1ghThaDbCn_8FNv2CtXqAmMNSLje8M"
-						response = urlopen(url).read()
-						json_res = json.loads(response)
-						if json_res["status"] == "OK":
-							distance = json_res["routes"][0]["legs"][0]["distance"]["value"]/1000
-							sort_list.append([k,distance])
-							k+=1
-							pickup = i.pickup_location.split(",")
-							destination = i.destination_location.split(",")
-							if len(pickup) >= 2:
-								temp_pickup = pickup[0]+pickup[1]
-							else:
-								temp_pickup = pickup[0]
-							if len(destination) >= 2:
-								temp_destination = destination[0]+destination[1]
-								temp_destination.replace(",","\n")
-							else:
-								temp_destination = destination[0]
-							tmp_list.append({'travel_id':tv.pk,'request_id':i.pk,'pickup_location':temp_pickup,'destination_location':temp_destination,'distance':distance,'fare':i.fare,'account_id':i.account.pk})
-							#return Response(distance)
-							
-							#return Response(json.dumps(LIST[j]))
-							#LIST.append([tv.pk,i.pk,distance])
+						if i.expire_time > timezone.now():
+							i.status = 'expire'
+							i.save()
+						else:
+							url = "https://maps.googleapis.com/maps/api/directions/json?origin="+str(tv.start_lattitude)+","+str(tv.start_longtitude)+"&destination="+str(tv.destination_lattitude)+","+str(tv.destination_longtitude)+"&waypoints=via:"+str(i.pickup_lattitude)+","+str(i.pickup_longtitude)+"|via:"+str(i.destination_lattitude)+","+str(i.destination_longtitude)+"&key=AIzaSyD8j1ghThaDbCn_8FNv2CtXqAmMNSLje8M"
+							response = urlopen(url).read()
+							json_res = json.loads(response)
+							if json_res["status"] == "OK":
+								distance = json_res["routes"][0]["legs"][0]["distance"]["value"]/1000
+								sort_list.append([k,distance])
+								k+=1
+								pickup = i.pickup_location.split(",")
+								destination = i.destination_location.split(",")
+								if len(pickup) >= 2:
+									temp_pickup = pickup[0]+pickup[1]
+								else:
+									temp_pickup = pickup[0]
+								if len(destination) >= 2:
+									temp_destination = destination[0]+destination[1]
+									temp_destination.replace(",","\n")
+								else:
+									temp_destination = destination[0]
+								tmp_list.append({'travel_id':tv.pk,'request_id':i.pk,'pickup_location':temp_pickup,'destination_location':temp_destination,'distance':distance,'fare':i.fare,'account_id':i.account.pk})
+								#return Response(distance)
+								
+								#return Response(json.dumps(LIST[j]))
+								#LIST.append([tv.pk,i.pk,distance])
 					#return Response(distance)
 				if len(sort_list)==0:
 					LIST['status'].append({'status':'no request'})
