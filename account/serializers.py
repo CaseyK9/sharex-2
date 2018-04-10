@@ -79,13 +79,3 @@ class UpdateMatchingStation(serializers.Serializer):
 
 class GetRequestHistory(serializers.Serializer):
 	account_id = serializers.IntegerField()
-	"""docstring for GetRequestHistory"serializers.Serializerf __init__(self, arg):
-		super(GetRequestHistory,serializers.Serializer.__init__()
-		self.arg = arg
-		
-	
-
-
-
-
-		
