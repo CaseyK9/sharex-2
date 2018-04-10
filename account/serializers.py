@@ -23,7 +23,7 @@ class UserRequestSerializer(serializers.ModelSerializer,serializers.Serializer):
 	expire_date = serializers.IntegerField()
 	class Meta:
 		model = Request
-		exclude = ('account','status')
+		exclude = ('account','status','expire_time')
 
 class UserTravelSerializer(serializers.ModelSerializer):
 
