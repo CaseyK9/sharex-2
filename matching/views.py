@@ -125,7 +125,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					tmp.save()
 					url = 'https://fcm.googleapis.com/fcm/send'
 					payload = {'notification':{'body':'test','title':'test','sound':'default','priority':'high'},'data':{},'to':tmp.account.firebase_key}
-					headers = {'Content-Type':"application/json",'Authorization':"key=AAAAlRsX6G8:APA91bHeUES-WUYy2bYSLzbK6td4p8xZACl_LunpyDmLEtffHD_MYkJrDii5XdfhTDX27Vr1m9YwrFL7NhJtdVHUJENur3Zf5IRD5zKduM1MH_d49zrGz77u9r6DaT2erz_Nayp_izfp"}
+					headers = {'Content-Type':"application/json",'Authorization':"AAAAlRsX6G8:APA91bHeUES-WUYy2bYSLzbK6td4p8xZACl_LunpyDmLEtffHD_MYkJrDii5XdfhTDX27Vr1m9YwrFL7NhJtdVHUJENur3Zf5IRD5zKduM1MH_d49zrGz77u9r6DaT2erz_Nayp_izfp"}
 					r = requests.post(url,data=payload,headers=headers)
 					print(r)
 				travel_obj.account.status = "busy"
