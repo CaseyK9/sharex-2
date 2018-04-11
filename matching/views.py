@@ -67,6 +67,11 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 	def create(self,request):
 		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid():
+			url = 'https://fcm.googleapis.com/fcm/send'
+			payload = {"to":"eYvP2nJtLXc:APA91bEPUWLpKCKeMLoGmrpbok3VJG73IgV4YWYCl6DwDfIgiVtRVBnq7MjKdIfGFYRoJdslchZ4XSH0wpn-JdRoZk-guVPJcGCeza3rZvPhSiTSkPGi7cgPVNRNKMjbiP-Kr_vC9hcG","data":{},"notification":{"title":"ฟหกดา","body":"ฟหกดว","priority":"high","sound":"default"},}
+			headers = {'Content-Type':"application/json",'Authorization':"key=AAAAlRsX6G8:APA91bHeUES-WUYy2bYSLzbK6td4p8xZACl_LunpyDmLEtffHD_MYkJrDii5XdfhTDX27Vr1m9YwrFL7NhJtdVHUJENur3Zf5IRD5zKduM1MH_d49zrGz77u9r6DaT2erz_Nayp_izfp"}
+			r = requests.post(url,data=payload,headers=headers)
+			print(r)
 			location=[]
 			response_message = {'matching_id':[],'travel_id':[],'sequence':[],'details':[]}
 			travel_obj = Travel.objects.get(pk = serializer.data['travel_id'])
@@ -124,8 +129,8 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					tmp.status = "matched"
 					tmp.save()
 					url = 'https://fcm.googleapis.com/fcm/send'
-					payload = {'notification':{'body':'test','title':'test','sound':'default','priority':'high'},'data':{},'to':tmp.account.firebase_key}
-					headers = {'Content-Type':"application/json",'Authorization':"AAAAlRsX6G8:APA91bHeUES-WUYy2bYSLzbK6td4p8xZACl_LunpyDmLEtffHD_MYkJrDii5XdfhTDX27Vr1m9YwrFL7NhJtdVHUJENur3Zf5IRD5zKduM1MH_d49zrGz77u9r6DaT2erz_Nayp_izfp"}
+					payload = {"to":"eYvP2nJtLXc:APA91bEPUWLpKCKeMLoGmrpbok3VJG73IgV4YWYCl6DwDfIgiVtRVBnq7MjKdIfGFYRoJdslchZ4XSH0wpn-JdRoZk-guVPJcGCeza3rZvPhSiTSkPGi7cgPVNRNKMjbiP-Kr_vC9hcG","data":{},"notification":{"title":"ฟหกดา","body":"ฟหกดว","priority":"high","sound":"default"},}
+					headers = {'Content-Type':"application/json",'Authorization':"key=AAAAlRsX6G8:APA91bHeUES-WUYy2bYSLzbK6td4p8xZACl_LunpyDmLEtffHD_MYkJrDii5XdfhTDX27Vr1m9YwrFL7NhJtdVHUJENur3Zf5IRD5zKduM1MH_d49zrGz77u9r6DaT2erz_Nayp_izfp"}
 					r = requests.post(url,data=payload,headers=headers)
 					print(r)
 				travel_obj.account.status = "busy"
