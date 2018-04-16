@@ -76,6 +76,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 			if j==0:
 				return Response({'status':'no list'})
 			else:
+				print("test")
 				response_message['travel_id'].append(travel_obj.pk)
 				for i in range(0,j+1,1):
 					if i==0:
