@@ -11,6 +11,7 @@ from django.core import serializers
 from travel.models import Travel
 from request.models import Request
 from account.models import Account
+from matching_detail.models import Matching_Detail
 import json
 import requests
 
