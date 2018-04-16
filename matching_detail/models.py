@@ -9,7 +9,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUserna
 class Matching_Detail(models.Model):
 	matching = models.ForeignKey(settings.MATCHING,blank=True,null=True)
 	travel = models.ForeignKey(settings.TRAVEL,blank=True,null=True)
-	request = models.ForeignKey(settings.Request,blank=True,null=True)
+	request = models.ForeignKey(settings.REQUEST,blank=True,null=True)
 	#request_data = models.ForeignKey(settings.REQUEST,blank=True,null=True)
 	signatute = models.ImageField(upload_to='signature_profile',blank=True,null=True)
 	status = models.CharField(max_length=255,default="doing")
