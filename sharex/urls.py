@@ -28,7 +28,7 @@ router.register(r'get-multiple-matching',Get_Multiple_Matching)
 router.register(r'update-station',Update_Matching_Station)
 #router.register(r'get-list-match',GetList_Match_ViewSet)
 router.register(r'get-request-detail',Get_Request_Detail)
-router.register(r'get-request-detail',Get_Request_History)
+router.register(r'get-request-history',Get_Request_History)
 
 router.register(r'get-list-travel',GetTravel_List)
 router.register(r'matching',GetMatchViewSet)
