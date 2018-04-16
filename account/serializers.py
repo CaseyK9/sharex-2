@@ -10,7 +10,7 @@ class UserLogInSerializer(serializers.Serializer):
 
     email = serializers.CharField(max_length=255)
     password = serializers.CharField(min_length=4)
-    firebas_key = serializers.CharField(max_length=255)
+    firebase_key = serializers.CharField(max_length=255)
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
