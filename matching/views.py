@@ -69,9 +69,9 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 	permission_classes =  (IsDriverAccount,IsAuthenticated,)
 	print("test")
 	def create(self,request):
-		print("test")
-		serializer = self.get_serializer(data=request.data)
 
+		serializer = self.get_serializer(data=request.data)
+		print("test")
 		if serializer.is_valid():
 
 			location=[]
