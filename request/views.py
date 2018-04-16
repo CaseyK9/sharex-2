@@ -78,6 +78,33 @@ class Get_Request_History(mixins.CreateModelMixin,
 			#obj = Token.objects.get(user=user)
 			for i in Request.objects.all():
 				if request.user == i.account:
-					if i.status == "doing":
-						rq_list.append({'request_id':i.pk,'pickup_location':i.pickup_location,'pickup_lattitude':i.pickup_lattitude,'pickup_longtitude':i.pickup_longtitude,'dropoff_address':i.destination_location,'dropoff_lattitude':i.destination_lattitude,'dropoff_longtitude':i.destination_longtitude,'receiver_address':i.receiver_address,'receiver_tel':i.receiver_tel,'fare':i.fare,'status':i.status,'timestamp':str(i.timestamp)})
+					#if i.status == "doing":
+					text = str(i.timestamp).split('.',1)[0]
+					text_date = text.split(' ',1)[0]
+					text_date = text_date.split('-')
+					tmp = text_date[0]
+					text_date[0]=text_date[2]
+					text_date[2]=tmp
+					text_date = text_date[0]+'-'+text_date[1]+'-'+text_date[2]
+					text_time = text.split(' ',1)[1]
+					rq_list.append({'request_id':i.pk,'pickup_location':i.pickup_location,'pickup_lattitude':i.pickup_lattitude,'pickup_longtitude':i.pickup_longtitude,'dropoff_address':i.destination_location,'dropoff_lattitude':i.destination_lattitude,'dropoff_longtitude':i.destination_longtitude,'receiver_address':i.receiver_address,'receiver_tel':i.receiver_tel,'fare':i.fare,'status':i.status,'timestamp':text_date+' '+text_time})
 			return Response(rq_list)
+
+
+class Cancel_Request(mixins.CreateModelMixin,
+					    viewsets.GenericViewSet):
+	queryset = Request.objects.all()
+	serializer_class = CancelRequest
+	permission_classes = (IsCustomerAccount,)
+	def create(self,request):
+		serializer = self.get_serializer(data = request.data)
+		if serializer.is_valid():
+			rq = Request.objects.get(pk = serializer.data['request_id'])
+			if rq.status=='doing':
+				rq.status = "cancel"
+				rq.save()
+				return Response("success")
+			elif rq.status == 'matched':
+				return Response("Request has already matched")
+
+		

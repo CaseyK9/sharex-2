@@ -80,3 +80,7 @@ class UpdateMatchingStation(serializers.Serializer):
 
 class GetRequestHistory(serializers.Serializer):
 	"""adsfasdfasdfasdfasdf"""
+
+class CancelRequest(serializers.Serializer):
+	#import GetMultipleMatching_Sub
+	request_id = serializers.IntegerField()
