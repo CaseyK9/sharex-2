@@ -61,11 +61,12 @@ class GetMatchViewSet(mixins.CreateModelMixin,
 
 class Get_Multiple_Matching(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
+	print("test")
 	queryset = Matching.objects.all()
 	serializer_class = GetMultipleMatching
 	permission_classes =  (IsDriverAccount,IsAuthenticated,)
 	def create(self,request):
-		print("test")
+
 		serializer = self.get_serializer(data=request.data)
 
 		if serializer.is_valid():
