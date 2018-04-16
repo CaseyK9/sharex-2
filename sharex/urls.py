@@ -41,5 +41,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
     # url(r'^logout/$', 'django.contrib.auth.views.logout',{'next_page': '/successfully_logged_out/'})
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
