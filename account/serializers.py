@@ -10,13 +10,14 @@ class UserLogInSerializer(serializers.Serializer):
 
     email = serializers.CharField(max_length=255)
     password = serializers.CharField(min_length=4)
+    firebas_key = serializers.CharField(max_length=255)
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Account
-		fields = ('email','password','first_name','last_name','tel','address','is_driver','personal_id','license','firebase_key')
+		fields = ('email','password','first_name','last_name','tel','address','is_driver','personal_id','license')
 
 
 class UserRequestSerializer(serializers.ModelSerializer,serializers.Serializer):
