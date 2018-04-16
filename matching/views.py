@@ -67,6 +67,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 	def create(self,request):
 		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid():
+			print("test")
 			location=[]
 			response_message = {'matching_id':[],'travel_id':[],'sequence':[],'details':[]}
 			travel_obj = Travel.objects.get(pk = serializer.data['travel_id'])
@@ -76,7 +77,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 			if j==0:
 				return Response({'status':'no list'})
 			else:
-				print("test")
+				
 				response_message['travel_id'].append(travel_obj.pk)
 				for i in range(0,j+1,1):
 					if i==0:
