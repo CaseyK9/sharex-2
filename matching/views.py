@@ -122,7 +122,6 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 						matching = var_matching.pk,
 						travel =travel_obj,
 						request = tmp,
-						status = "matched"
 					)
 					#mc_dt = Matching_Detail.objects.create(
 					#	matching = var_matching,

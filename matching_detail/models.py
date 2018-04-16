@@ -12,7 +12,7 @@ class Matching_Detail(models.Model):
 	request = models.ForeignKey(settings.REQUEST,blank=True,null=True)
 	#request_data = models.ForeignKey(settings.REQUEST,blank=True,null=True)
 	
-	status = models.CharField(max_length=255,default="doing")
+	status = models.CharField(max_length=255,default="matched")
 
 	timestamp = models.DateTimeField(auto_now_add=True, db_index=True,null=True)
 	timeupdate = models.DateTimeField(auto_now=True)
