@@ -47,6 +47,8 @@ class UserLoginViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             #request.session['email'] = email;
             #request.session.set_expiry(3153600000)
             user.firebase_key = serializer.data['firebase_key']
+            user.save()
+            #print('firebase token => '+user.fi)
             # response = UserAccountSerializer(user).data
             obj = Token.objects.get(user=user)
             detail = []
