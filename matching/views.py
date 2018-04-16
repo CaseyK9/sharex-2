@@ -132,7 +132,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					tmp.status = "matched"
 					tmp.save()
 					url = 'https://fcm.googleapis.com/fcm/send'
-					print(type(tmp.account.firebase_key)+tmp.account.first_name)
+					#print(type(tmp.account.firebase_key)+tmp.account.first_name)
 					payload = '{"to":"'+'eYvP2nJtLXc:APA91bEPUWLpKCKeMLoGmrpbok3VJG73IgV4YWYCl6DwDfIgiVtRVBnq7MjKdIfGFYRoJdslchZ4XSH0wpn-JdRoZk-guVPJcGCeza3rZvPhSiTSkPGi7cgPVNRNKMjbiP-Kr_vC9hcG'+'","data":{},"notification":{"title":"Your request has been matched","body":"idontknow","priority":"high","sound":"default"},}'
 					print(payload)
 					headers = {'Content-Type':"application/json",'Authorization':"key=AAAAlRsX6G8:APA91bHeUES-WUYy2bYSLzbK6td4p8xZACl_LunpyDmLEtffHD_MYkJrDii5XdfhTDX27Vr1m9YwrFL7NhJtdVHUJENur3Zf5IRD5zKduM1MH_d49zrGz77u9r6DaT2erz_Nayp_izfp"}
