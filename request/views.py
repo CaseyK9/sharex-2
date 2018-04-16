@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from account.models import Account
 from .models import Request
+from matching_detail.models import Matching_Detail
 #from .authenticate import CsrfExemptSessionAuthentication
 from account.serializers import *
 from account.permissions import IsCustomerAccount,IsDriverAccount
@@ -76,5 +77,6 @@ class Get_Request_History(mixins.CreateModelMixin,
 			rq_list = []
 			for i in Request.objects.all():
 				if request.user == i.account:
-					rq_list.append({'request_id':i.pk,'pickup_location':i.pickup_location,'pickup_lattitude':i.pickup_lattitude,'pickup_longtitude':i.pickup_longtitude,'dropoff_address':i.destination_location,'dropoff_lattitude':i.destination_lattitude,'dropoff_longtitude':i.destination_longtitude,'receiver_address':i.receiver_address,'receiver_tel':i.receiver_tel,'fare':i.fare,'status':i.status,'receiver_signature':i.signature,})
+					if i.status == "doing":
+						rq_list.append({'request_id':i.pk,'pickup_location':i.pickup_location,'pickup_lattitude':i.pickup_lattitude,'pickup_longtitude':i.pickup_longtitude,'dropoff_address':i.destination_location,'dropoff_lattitude':i.destination_lattitude,'dropoff_longtitude':i.destination_longtitude,'receiver_address':i.receiver_address,'receiver_tel':i.receiver_tel,'fare':i.fare,'status':i.status,'timestamp':str(i.timestamp)})
 			return Response(rq_list)
