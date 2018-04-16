@@ -79,4 +79,4 @@ class UpdateMatchingStation(serializers.Serializer):
 	matching_id = serializers.IntegerField()
 
 class GetRequestHistory(serializers.Serializer):
-	account_id = serializers.IntegerField()
+	#token = serializers.CharField()

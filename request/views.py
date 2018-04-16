@@ -75,6 +75,7 @@ class Get_Request_History(mixins.CreateModelMixin,
 		serializer = self.get_serializer(data = request.data)
 		if serializer.is_valid():
 			rq_list = []
+			#obj = Token.objects.get(user=user)
 			for i in Request.objects.all():
 				if request.user == i.account:
 					if i.status == "doing":
