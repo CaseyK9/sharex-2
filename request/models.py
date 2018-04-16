@@ -23,6 +23,8 @@ class Request(models.Model):
 	receiver_tel = models.CharField(max_length=255,blank=True,null=True)
 	receiver_address = models.CharField(max_length=255,blank=True,null=True)
 	
+	signatute = models.ImageField(upload_to='signature',blank=True,null=True)
+
 	TYPE_CHOICES = (
 		(1, 'truck'),
 		(2, 'sedan'),

@@ -76,4 +76,5 @@ class Get_Request_History(mixins.CreateModelMixin,
 			rq_list = []
 			for i in Request.objects.all():
 				if request.user == i.account:
-					rq_list.append({'request_id':i.pk,'pickup_location':i.pickup_location,'pickup_lattitude':i.pickup_lattitude,'pickup_longtitude':i.pickup_longtitude,'dropoff_address':i.destination_location,'dropoff_lattitude':i.destination_lattitude,'dropoff_longtitude':i.destination_longtitude,'receiver_address':i.receiver_address,'receiver_tel':i.receiver_tel,'fare':i.fare,'status':i.status,'receiver_signature':i.receiver_signature,})
+					rq_list.append({'request_id':i.pk,'pickup_location':i.pickup_location,'pickup_lattitude':i.pickup_lattitude,'pickup_longtitude':i.pickup_longtitude,'dropoff_address':i.destination_location,'dropoff_lattitude':i.destination_lattitude,'dropoff_longtitude':i.destination_longtitude,'receiver_address':i.receiver_address,'receiver_tel':i.receiver_tel,'fare':i.fare,'status':i.status,'receiver_signature':i.signature,})
+			return Response(rq_list)

@@ -11,7 +11,7 @@ class Matching_Detail(models.Model):
 	travel = models.ForeignKey(settings.TRAVEL,blank=True,null=True)
 	request = models.ForeignKey(settings.REQUEST,blank=True,null=True)
 	#request_data = models.ForeignKey(settings.REQUEST,blank=True,null=True)
-	signatute = models.ImageField(upload_to='signature',blank=True,null=True)
+	
 	status = models.CharField(max_length=255,default="doing")
 
 	timestamp = models.DateTimeField(auto_now_add=True, db_index=True,null=True)
