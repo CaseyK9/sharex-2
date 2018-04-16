@@ -63,16 +63,12 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
 	
 	queryset = Matching.objects.all()
-
 	serializer_class = GetMultipleMatching
-
 	permission_classes =  (IsDriverAccount,IsAuthenticated,)
 	def create(self,request):
 		print("test")
 		serializer = self.get_serializer(data=request.data)
-		
 		if serializer.is_valid():
-
 			location=[]
 			response_message = {'matching_id':[],'travel_id':[],'sequence':[],'details':[]}
 			travel_obj = Travel.objects.get(pk = serializer.data['travel_id'])
@@ -81,8 +77,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 			j = len(serializer.data['request_list'])
 			if j==0:
 				return Response({'status':'no list'})
-			else:
-				
+			else:		
 				response_message['travel_id'].append(travel_obj.pk)
 				for i in range(0,j+1,1):
 					if i==0:
