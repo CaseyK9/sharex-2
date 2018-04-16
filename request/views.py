@@ -101,7 +101,7 @@ class Cancel_Request(mixins.CreateModelMixin,
 		if serializer.is_valid():
 			rq = Request.objects.get(pk = serializer.data['request_id'])
 			if rq.status=='doing':
-				rq.status = "canceled"
+				rq.status = "cancelled"
 				rq.save()
 				return Response("success")
 			elif rq.status == 'matched':
