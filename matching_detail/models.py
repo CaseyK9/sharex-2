@@ -7,7 +7,7 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, Permi
 from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUsernameValidator
 
 class Matching_Detail(models.Model):
-	matching = models.ForeignKey(settings.MATCHING,blank=True,null=True)
+	matching_id = models.IntegerField(max_length=255,blank=True,null=True)
 	travel = models.ForeignKey(settings.TRAVEL,blank=True,null=True)
 	request = models.ForeignKey(settings.REQUEST,blank=True,null=True)
 	#request_data = models.ForeignKey(settings.REQUEST,blank=True,null=True)

@@ -118,7 +118,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 				for i in range(0,len(serializer.data['request_list']),1):
 					tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
 					mc_dt_obj = Matching_Detail.objects.create(
-						matching = var_matching,
+						matching = var_matching.pk,
 						travel =travel_obj,
 						request = tmp,
 						status = 'matched'
