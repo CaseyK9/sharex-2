@@ -85,3 +85,9 @@ class GetRequestHistory(serializers.Serializer):
 class CancelRequest(serializers.Serializer):
 	#import GetMultipleMatching_Sub
 	request_id = serializers.IntegerField()
+
+
+class StoreRouteUrl(serializers.Serializer):
+	#import GetMultipleMatching_Sub
+	request_id = serializers.IntegerField()
+	route_url = serializers.CharField()

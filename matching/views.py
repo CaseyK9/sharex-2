@@ -168,4 +168,20 @@ class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
 				mc_obj.current_station = mc_obj.current_station+1;
 				mc_obj.save()
 	
-		
+
+
+class Store_Route_Url(mixins.CreateModelMixin,
+					    viewsets.GenericViewSet):
+	queryset = Matching.objects.all()
+	serializer_class = StoreRouteUrl
+	permission_classes = (IsDriverAccount,)
+	def create(self,request):
+		serializer = self.get_serializer(data = request.data)
+		if serializer.is_valid():
+			mc_obj = Matching.objects.get(pk = serializer.data['matching_id'])
+			for i in range(0,len(mc_obj.sequence.split("->"))-1,1):
+				rq_obj = Request.objects.filter(pk = int(mc_obj.sequence.split("->")[i][0:len(mc_obj.sequence.split("->")[i])-1]))
+				rq_obj.route_url = serializer.data['route_url']
+				rq_obj.save()
+		else
+			return

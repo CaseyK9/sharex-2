@@ -25,6 +25,7 @@ class Request(models.Model):
 	
 	signatute = models.ImageField(upload_to='signature',blank=True,null=True)
 	tracking_key = models.CharField(max_length=255,blank=True,null=True)
+	route_url =models.CharField(max_length=255,blank=True,null=True)
 	timestamp = models.DateTimeField(auto_now_add=True, db_index=True,null=True)
 	TYPE_CHOICES = (
 		(1, 'truck'),
