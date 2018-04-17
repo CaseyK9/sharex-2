@@ -61,7 +61,7 @@ class Get_Request_Detail(mixins.CreateModelMixin,
 				name = rq.account.first_name+" "+rq.account.last_name
 				pickup_address = rq.pickup_location.split(',',1)[0]
 				destination_address = rq.destination_location.split(',',1)[0]
-				detail['details'].append({'request_id':rq.pk,'customer_name':name,'customer_tel':rq.account.tel,'pickup_location':pickup_address,'pickup_longtitude':rq.pickup_longtitude,'pickup_lattitude':rq.pickup_lattitude,'destination_location':destination_address,'destination_longtitude':rq.destination_longtitude,'destination_lattitude':rq.destination_lattitude,'receiver_name':rq.receiver_name,'receiver_tel':rq.receiver_tel,'receiver_address':rq.receiver_address,'type':rq._type,'fare':rq.fare,'tracking_key':rq.tracking_key})
+				detail['details'].append({'request_id':rq.pk,'customer_name':name,'customer_tel':rq.account.tel,'pickup_location':pickup_address,'pickup_longtitude':rq.pickup_longtitude,'pickup_lattitude':rq.pickup_lattitude,'destination_location':destination_address,'destination_longtitude':rq.destination_longtitude,'destination_lattitude':rq.destination_lattitude,'receiver_name':rq.receiver_name,'receiver_tel':rq.receiver_tel,'receiver_address':rq.receiver_address,'type':rq._type,'fare':rq.fare,'tracking_key':rq.tracking_key,'route_url':rq.route_url})
 				detail['status'].append({'status':'okay'})
 				return Response(detail)
 			else:
