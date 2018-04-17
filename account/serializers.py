@@ -72,6 +72,7 @@ class GetMultipleMatching_Sub(serializers.Serializer):
 class GetMultipleMatching(serializers.Serializer):
 	#import GetMultipleMatching_Sub
 	travel_id = serializers.IntegerField()
+	tracking_key = serializers.CharField()
 	request_list = GetMultipleMatching_Sub(many=True)
 
 class UpdateMatchingStation(serializers.Serializer):

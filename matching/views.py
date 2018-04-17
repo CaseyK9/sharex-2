@@ -130,6 +130,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					#	status = 'matched'
 					#)
 					tmp.status = "matched"
+					tmp.tracking_key = serializer.data['tracking_key']
 					tmp.save()
 					url = 'https://fcm.googleapis.com/fcm/send'
 					#print(type(tmp.account.firebase_key)+tmp.account.first_name)
