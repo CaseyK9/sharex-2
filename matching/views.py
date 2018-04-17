@@ -137,10 +137,11 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					payload = '{"to":"'+tmp.account.firebase_key+'","data":{},"notification":{"title":"Your request has been matched","body":"idontknow","priority":"high","sound":"default"},}'
 					#print(payload)
 					headers = {'Content-Type':"application/json",'Authorization':"key=AAAAlRsX6G8:APA91bHeUES-WUYy2bYSLzbK6td4p8xZACl_LunpyDmLEtffHD_MYkJrDii5XdfhTDX27Vr1m9YwrFL7NhJtdVHUJENur3Zf5IRD5zKduM1MH_d49zrGz77u9r6DaT2erz_Nayp_izfp"}
-					#r = requests.post(url,data=payload,headers=headers)
+					r = requests.post(url,data=payload,headers=headers)
 					
 				travel_obj.account.status = "busy"
 				travel_obj.save()
+				print(travel_obj.account.status)
 				#tt = Matching.objects.filter(travel_data = travel_obj,sequence = message)
 				response_message['matching_id'].append(var_matching.pk)
 				return Response(response_message)
@@ -178,10 +179,8 @@ class Store_Route_Url(mixins.CreateModelMixin,
 	def create(self,request):
 		serializer = self.get_serializer(data = request.data)
 		if serializer.is_valid():
-			mc_obj = Matching.objects.get(pk = serializer.data['matching_id'])
-			for i in range(0,len(mc_obj.sequence.split("->"))-1,1):
-				rq_obj = Request.objects.filter(pk = int(mc_obj.sequence.split("->")[i][0:len(mc_obj.sequence.split("->")[i])-1]))
-				rq_obj.route_url = serializer.data['route_url']
-				rq_obj.save()
+			rq_obj = Request.objects.get(pk = serializer.data['request_id'])
+			rq_obj.route_url = serializer.data['route_url']
+			rq_obj.save()
 		else:
-			return
+			return Response("invalid serializer")
