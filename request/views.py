@@ -51,7 +51,7 @@ class Get_Request_Detail(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
 	queryset = Request.objects.all()
 	serializer_class = GetRequestDetail
-	permission_classes = (IsCustomerAccount)
+	permission_classes = (IsCustomerAccount,)
 	def create(self,request):
 		serializer = self.get_serializer(data = request.data)
 		if serializer.is_valid():
