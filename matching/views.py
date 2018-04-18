@@ -172,7 +172,8 @@ class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
 				#	rq_obj = Request.objects.filter(pk = int(mc_obj.sequence.split("->")[i][0:len(mc_obj.sequence.split("->")[i])-1]))
 				#	rq_obj.status = 'done'
 				#	rq_obj.save()
-				mc_obj.save()
+				mc_obj.travel_data.save()
+				mc_obj.travel_data.account.save()
 				return Response("travel completed")
 			else:
 				if mc_obj.sequence.split('->')[mc_obj.current_station][len(mc_obj.sequence.split('->')[mc_obj.current_station])-1] == 'b':
