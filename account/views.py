@@ -111,6 +111,27 @@ class test_Token(mixins.CreateModelMixin,viewsets.GenericViewSet):
             return Response("Unauthenticated")
 
 
+class Get_Account_Detail(mixins.CreateModelMixin,viewsets.GenericViewSet):
+    queryset = Account.objects.all()
+    serializer_class = GetAccountDetail
+    permission_classes = (IsAuthenticated, )
+    def create(self,request):
+        return Response({'first_name':request.user.first_name,'last_name':request.user.last_name,'tel':request.user.tel,'address':request.user.address})
+
+class Edit_Profile(mixins.CreateModelMixin,viewsets.GenericViewSet):
+    queryset = Account.objects.all()
+    serializer_class = EditProfile
+    permission_classes = (IsAuthenticated, )
+    def create(self,request):
+        request.user.first_name = serializer.data['first_name']
+        request.user.last_name = serializer.data['last_name']
+        request.user.tel = serializer.data['tel']
+        request.user.address = serializer.data['address']
+        request.user.save()
+        return Response("done")
+        
+        
+
 # class gen_token(mixins.CreateModelMixin,viewsets.GenericViewSet):
 #     queryset = Account.objects.all()
 #     serializer_class = genSerializer

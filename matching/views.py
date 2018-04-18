@@ -25,6 +25,7 @@ class GetMatching_Detail(mixins.CreateModelMixin,
 		if serializer.is_valid():
 			mc = Matching.objects.get(pk = serializer.data['matching_id'])
 			response_message = {'matching_id':[],'travel_id':[],'tracking_key':[],'current_station':[],'sequence':[],'details':[]}
+			response_message['matching_id'].append(serializer.data['matching_id'])
 			response_message['travel_id'].append(mc.travel_data.pk)
 			response_message['current_station'].append(mc.current_station)
 			if mc != None:
