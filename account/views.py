@@ -123,12 +123,16 @@ class Edit_Profile(mixins.CreateModelMixin,viewsets.GenericViewSet):
     serializer_class = EditProfile
     permission_classes = (IsAuthenticated, )
     def create(self,request):
-        request.user.first_name = serializer.data['first_name']
-        request.user.last_name = serializer.data['last_name']
-        request.user.tel = serializer.data['tel']
-        request.user.address = serializer.data['address']
-        request.user.save()
-        return Response("done")
+        serializer = self.get_serializer(data = request.data)
+        if serializer.is_valid():
+            request.user.first_name = serializer.data['first_name']
+            request.user.last_name = serializer.data['last_name']
+            request.user.tel = serializer.data['tel']
+            request.user.address = serializer.data['address']
+            request.user.save()
+            return Response("done")
+        else:
+            return Response("invalid serializer")
         
         
 
