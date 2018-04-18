@@ -140,8 +140,8 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					r = requests.post(url,data=payload,headers=headers)
 					
 				travel_obj.account.status = "busy"
-				#travel_obj.save()
 				print(travel_obj.account.status)
+				travel_obj.save()
 				#tt = Matching.objects.filter(travel_data = travel_obj,sequence = message)
 				response_message['matching_id'].append(var_matching.pk)
 				return Response(response_message)

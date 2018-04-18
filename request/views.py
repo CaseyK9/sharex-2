@@ -91,7 +91,7 @@ class Get_Request_History(mixins.CreateModelMixin,
 					text_time = text.split(' ',1)[1]
 					pickup_address = i.pickup_location.split(',',1)[0]
 					destination_address = i.destination_location.split(',',1)[0]
-					rq_list.append({'request_id':i.pk,'pickup_location':pickup_address,'pickup_lattitude':i.pickup_lattitude,'pickup_longtitude':i.pickup_longtitude,'dropoff_address':destination_address,'dropoff_lattitude':i.destination_lattitude,'dropoff_longtitude':i.destination_longtitude,'receiver_address':i.receiver_address,'receiver_tel':i.receiver_tel,'fare':i.fare,'status':i.status,'timestamp':text_date+' '+text_time,'type':i.type})
+					rq_list.append({'request_id':i.pk,'pickup_location':pickup_address,'pickup_lattitude':i.pickup_lattitude,'pickup_longtitude':i.pickup_longtitude,'dropoff_address':destination_address,'dropoff_lattitude':i.destination_lattitude,'dropoff_longtitude':i.destination_longtitude,'receiver_address':i.receiver_address,'receiver_tel':i.receiver_tel,'fare':i.fare,'status':i.status,'timestamp':text_date+' '+text_time,'_type':i._type})
 			return Response(rq_list)
 
 
