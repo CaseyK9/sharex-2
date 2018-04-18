@@ -30,7 +30,9 @@ router.register(r'store-route-url',Store_Route_Url)
 
 #router.register(r'get-list-match',GetList_Match_ViewSet)
 router.register(r'get-request-detail',Get_Request_Detail)
+router.register(r'get-account-detail',Get_Account_Detail)
 router.register(r'get-request-history',Get_Request_History)
+router.register(r'edit-profile',Edit_Profile)
 router.register(r'cancel-request',Cancel_Request)
 
 router.register(r'get-list-travel',GetTravel_List)
