@@ -24,12 +24,11 @@ class GetMatching_Detail(mixins.CreateModelMixin,
 		serializer = self.get_serializer(data = request.data)
 		if serializer.is_valid():
 			mc = Matching.objects.get(pk = serializer.data['matching_id'])
+			response_message = {'matching_id':[],'travel_id':[],'tracking_key':[],'current_station':[],'sequence':[],'details':[]}
+			response_message['travel_id'].append(mc.travel_data.pk)
 			if mc != None:
-				detail = {'travel':[],'request':[]}
-				#name = tmp.account.first_name+" "+tmp.account.last_name
-				name = mc.request_data.account.first_name+" "+mc.request_data.account.last_name
-				detail['travel'].append({'travel_id':mc.travel_data.pk,'start_location':mc.travel_data.start_location,'start_longtitude':mc.travel_data.start_longtitude,'start_lattitude':mc.travel_data.start_lattitude,'car_id':mc.travel_data.car_id,'destination_location':mc.travel_data.destination_location,'destination_longtitude':mc.travel_data.destination_longtitude,'destination_lattitude':mc.travel_data.destination_lattitude,'status':mc.travel_data.status})
-				detail['request'].append({'request_id':mc.request_data.pk,'pickup_location':mc.request_data.pickup_location,'pickup_longtitude':mc.request_data.pickup_longtitude,'pickup_lattitude':mc.request_data.pickup_lattitude,'receiver_name':mc.request_data.receiver_name,'receiver_tel':mc.request_data.receiver_tel,'receiver_address':mc.request_data.receiver_address,'destination_location':mc.request_data.destination_location,'destination_longtitude':mc.request_data.destination_longtitude,'destination_lattitude':mc.request_data.destination_lattitude,'status':mc.request_data.status,'_type':mc.request_data._type,'fare':mc.request_data.fare,'customer_name':name,'customer_tel':mc.request_data.account.tel,'address':mc.request_data.account.address})
+				for i in range(0,len(mc.sequence.split('->'))-1,1):
+					rq_id = int(mc.sequence.split('->')[i][0:len(mc.sequence.split('->')[i])-1])
 				return Response(detail)
 			else:
 				return Response({'error':True,'content' : 'failed'},status=status.HTTP_400_BAD_REQUEST)
@@ -165,9 +164,11 @@ class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
 					rq_obj.status = 'done'
 					rq_obj.save()
 				mc_obj.save()
+				return
 			else:
 				mc_obj.current_station = mc_obj.current_station+1;
 				mc_obj.save()
+				return
 	
 
 
