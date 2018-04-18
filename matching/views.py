@@ -28,10 +28,10 @@ class GetMatching_Detail(mixins.CreateModelMixin,
 			response_message['travel_id'].append(mc.travel_data.pk)
 			response_message['current_station'].append(mc.current_station)
 			if mc != None:
-				for i in range(0,len(mc.sequence.split('->')),1):
+				for i in range(0,len(mc.sequence.split('->'))-1,1):
 					rq_id = int(mc.sequence.split('->')[i][0:len(mc.sequence.split('->')[i])-2])
 					tmp = Request.objects.get(pk=rq_id)
-					if i == 1:
+					if i == 0:
 						response_message['tracking_key'].append(tmp.tracking_key)
 					response_message['sequence'].append({'request_id':rq_id,'status':'pickup'})
 					if mc.sequence.split('->')[i][len(mc.sequence.split('->')[i])-2] == 'b':
