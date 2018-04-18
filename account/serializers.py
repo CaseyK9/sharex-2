@@ -97,7 +97,7 @@ class GetAccountDetail(serializers.Serializer):
 	"""adsfasdfasdfasdfasdf"""
 
 
-class EditProfile(serializers.Serializer):
+class EditProfile(serializers.ModelSerializer):
 	class Meta:
 		model = Account
 		fields = ('first_name','last_name','tel','address')
