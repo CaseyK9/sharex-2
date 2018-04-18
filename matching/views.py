@@ -34,7 +34,7 @@ class GetMatching_Detail(mixins.CreateModelMixin,
 					if i == 1:
 						response_message['tracking_key'].append(tmp.tracking_key)
 					response_message['sequence'].append({'request_id':rq_id,'status':'pickup'})
-					if mc.sequence.split('->')[i][len(mc.sequence.split('->')[i])-2)] == 'b':
+					if mc.sequence.split('->')[i][len(mc.sequence.split('->')[i])-2] == 'b':
 						response_message['details'].append({'request_id':tmp.pk,'customer_name':tmp.account.first_name,'customer_tel':tmp.account.tel,'pickup_location':tmp.pickup_location,'pickup_longtitude':tmp.pickup_longtitude,'pickup_lattitude':tmp.pickup_lattitude,'destination_location':tmp.destination_location,'destination_longtitude':tmp.destination_longtitude,'destination_lattitude':tmp.destination_lattitude,'receiver_name':tmp.receiver_name,'receiver_tel':tmp.receiver_tel,'receiver_address':tmp.receiver_address,'type':tmp._type,'fare':tmp.fare})
 				return Response(response_message)
 			else:
