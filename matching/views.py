@@ -163,7 +163,7 @@ class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
 		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid():
 			mc_obj = Matching.objects.get(pk=serializer.data['matching_id'])
-			if mc_obj.travel_data.status = 'done':
+			if mc_obj.travel_data.status == 'done':
 				return Response("This matching has been finished")
 			if mc_obj.current_station == len(mc_obj.sequence.split('->'))-1: #success traveling
 				mc_obj.travel_data.status = 'done';
