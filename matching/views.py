@@ -26,10 +26,17 @@ class GetMatching_Detail(mixins.CreateModelMixin,
 			mc = Matching.objects.get(pk = serializer.data['matching_id'])
 			response_message = {'matching_id':[],'travel_id':[],'tracking_key':[],'current_station':[],'sequence':[],'details':[]}
 			response_message['travel_id'].append(mc.travel_data.pk)
+			response_message['current_station'].append(mc.current_station)
 			if mc != None:
-				for i in range(0,len(mc.sequence.split('->'))-1,1):
-					rq_id = int(mc.sequence.split('->')[i][0:len(mc.sequence.split('->')[i])-1])
-				return Response(detail)
+				for i in range(0,len(mc.sequence.split('->')),1):
+					rq_id = int(mc.sequence.split('->')[i][0:len(mc.sequence.split('->')[i])-2])
+					tmp = Request.objects.get(pk=rq_id)
+					if i == 1:
+						response_message['tracking_key'].append(tmp.tracking_key)
+					response_message['sequence'].append({'request_id':rq_id,'status':'pickup'})
+					if mc.sequence.split('->')[i][len(mc.sequence.split('->')[i])-2)] == 'b':
+						response_message['details'].append({'request_id':tmp.pk,'customer_name':tmp.account.first_name,'customer_tel':tmp.account.tel,'pickup_location':tmp.pickup_location,'pickup_longtitude':tmp.pickup_longtitude,'pickup_lattitude':tmp.pickup_lattitude,'destination_location':tmp.destination_location,'destination_longtitude':tmp.destination_longtitude,'destination_lattitude':tmp.destination_lattitude,'receiver_name':tmp.receiver_name,'receiver_tel':tmp.receiver_tel,'receiver_address':tmp.receiver_address,'type':tmp._type,'fare':tmp.fare})
+				return Response(response_message)
 			else:
 				return Response({'error':True,'content' : 'failed'},status=status.HTTP_400_BAD_REQUEST)
 
