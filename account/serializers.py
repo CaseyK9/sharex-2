@@ -91,3 +91,14 @@ class StoreRouteUrl(serializers.Serializer):
 	#import GetMultipleMatching_Sub
 	request_id = serializers.IntegerField()
 	route_url = serializers.CharField()
+
+
+class GetAccountDetail(serializers.Serializer):
+	"""adsfasdfasdfasdfasdf"""
+
+
+class EditProfile(serializers.Serializer):
+	class Meta:
+		model = Account
+		fields = ('first_name','last_name','tel','address')
+	"""adsfasdfasdfasdfasdf"""
