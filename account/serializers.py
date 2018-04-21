@@ -101,4 +101,9 @@ class EditProfile(serializers.ModelSerializer):
 	class Meta:
 		model = Account
 		fields = ('first_name','last_name','tel','address')
+
+
+class MakeItDone(serializers.Serializer):
+	rating = serializers.IntegerField()
+		
 	"""adsfasdfasdfasdfasdf"""

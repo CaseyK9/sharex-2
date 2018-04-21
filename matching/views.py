@@ -5,7 +5,7 @@ from request.models import Request
 from travel.models import Travel
 from urllib.request import urlopen
 from .models import Matching
-from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail,GetMultipleMatching,GetMultipleMatching_Sub,UpdateMatchingStation,StoreRouteUrl
+from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail,GetMultipleMatching,GetMultipleMatching_Sub,UpdateMatchingStation,StoreRouteUrl,MakeItDone
 from rest_framework.response import Response
 from django.core import serializers
 from travel.models import Travel
@@ -201,5 +201,21 @@ class Store_Route_Url(mixins.CreateModelMixin,
 			rq_obj = Request.objects.get(pk = serializer.data['request_id'])
 			rq_obj.route_url = serializer.data['route_url']
 			rq_obj.save()
+		else:
+			return Response("invalid serializer")
+
+
+class Make_It_Done(mixins.CreateModelMixin,
+					    viewsets.GenericViewSet):
+	queryset = Matching.objects.all()
+	serializer_class = MakeItDone
+	permission_classes = (IsDriverAccount,)
+	def create(self,request):
+		serializer = self.get_serializer(data = request.data)
+		if serializer.is_valid():
+			request.user.rating_sum += serializer.data['rating']
+			request.user.rating_number += 1
+			request.user.save()
+			return Response("Done")
 		else:
 			return Response("invalid serializer")

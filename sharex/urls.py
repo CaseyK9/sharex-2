@@ -39,6 +39,8 @@ router.register(r'get-list-travel',GetTravel_List)
 router.register(r'matching',GetMatchViewSet)
 router.register(r'add-car',add_car)
 
+router.register(r'make-it-done',Make_It_Done)
+
 # router.register(r'gentoken',gen_token)
 # router.register(r'logout',UserLogoutViewSet)
 
