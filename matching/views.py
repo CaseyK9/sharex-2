@@ -5,7 +5,7 @@ from request.models import Request
 from travel.models import Travel
 from urllib.request import urlopen
 from .models import Matching
-from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail,GetMultipleMatching,GetMultipleMatching_Sub,UpdateMatchingStation,StoreRouteUrl,MakeItDone
+from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail,GetMultipleMatching,GetMultipleMatching_Sub,UpdateMatchingStation,StoreRouteUrl,Make_It_Done
 from rest_framework.response import Response
 from django.core import serializers
 from travel.models import Travel
@@ -24,7 +24,7 @@ class GetMatching_Detail(mixins.CreateModelMixin,
 		serializer = self.get_serializer(data = request.data)
 		if serializer.is_valid():
 			mc = Matching.objects.get(pk = serializer.data['matching_id'])
-			response_message = {'matching_id':[],'travel_id':[],'tracking_key':[],'current_station':[],'sequence':[],'details':[]}
+			response_message = {'matching_id':[],'travel_id':[],'tracking_key':[],'current_station':[],'sequence':[],'details':[],'travel_point':{'start':{'lat':mc.travel_data.start_lattitude,'long':mc.travel_data.start_longtitude},'end':{'lat':mc.travel_data.destination_lattitude,'long':mc.travel_data.destination_longtitude}}}
 			response_message['matching_id'].append(serializer.data['matching_id'])
 			response_message['travel_id'].append(mc.travel_data.pk)
 			response_message['current_station'].append(mc.current_station)
@@ -34,8 +34,10 @@ class GetMatching_Detail(mixins.CreateModelMixin,
 					tmp = Request.objects.get(pk=rq_id)
 					if i == 0:
 						response_message['tracking_key'].append(tmp.tracking_key)
-					response_message['sequence'].append({'request_id':rq_id,'status':'pickup'})
+					if mc.sequence.split('->')[i][len(mc.sequence.split('->')[i])-2] == 'a':
+						response_message['sequence'].append({'request_id':rq_id,'status':'pickup'})
 					if mc.sequence.split('->')[i][len(mc.sequence.split('->')[i])-2] == 'b':
+						response_message['sequence'].append({'request_id':rq_id,'status':'dropoff'})
 						response_message['details'].append({'request_id':tmp.pk,'customer_name':tmp.account.first_name,'customer_tel':tmp.account.tel,'pickup_location':tmp.pickup_location,'pickup_longtitude':tmp.pickup_longtitude,'pickup_lattitude':tmp.pickup_lattitude,'destination_location':tmp.destination_location,'destination_longtitude':tmp.destination_longtitude,'destination_lattitude':tmp.destination_lattitude,'receiver_name':tmp.receiver_name,'receiver_tel':tmp.receiver_tel,'receiver_address':tmp.receiver_address,'type':tmp._type,'fare':tmp.fare})
 				return Response(response_message)
 			else:
