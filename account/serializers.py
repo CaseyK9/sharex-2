@@ -105,11 +105,3 @@ class EditProfile(serializers.ModelSerializer):
 
 class MakeItDone(serializers.Serializer):
 	rating = serializers.FloatField()
-		
-'''class GetSignature(object):
-	"""docstring for GetSignature"""
-	def __init__(self, arg):
-		super(GetSignature, self).__init__()
-		self.arg = arg'''
-		
-	'''adsfasdfasdfasdfasdf'''
