@@ -168,6 +168,17 @@ class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
 			mc_obj = Matching.objects.get(pk=serializer.data['matching_id'])
 			if mc_obj.travel_data.status == 'done':
 				return Response("This matching has been finished")
+			if mc_obj.current_station < len(mc_obj.sequence.split('->'))-2:
+				mc_obj.current_station = mc_obj.current_station+1;
+				mc_obj.save()
+				if mc_obj.sequence.split('->')[mc_obj.current_station-1][len(mc_obj.sequence.split('->')[mc_obj.current_station-1])-2] == 'b':
+					rq_obj = Request.objects.get(pk = int(mc_obj.sequence.split('->')[mc_obj.current_station-1][0:len(mc_obj.sequence.split('->')[mc_obj.current_station-1]-2)]))
+					print("done")
+					rq_obj.status = 'done'
+					rq_obj.save()
+					return Response("dropoff done")
+				else:
+					return Response("pickup done")
 			if mc_obj.current_station == len(mc_obj.sequence.split('->'))-1: #success traveling
 				mc_obj.travel_data.status = 'done';
 				mc_obj.travel_data.account.status = 'free';
@@ -178,16 +189,7 @@ class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
 				mc_obj.travel_data.save()
 				mc_obj.travel_data.account.save()
 				return Response("travel completed")
-			else:
-				if mc_obj.sequence.split('->')[mc_obj.current_station][len(mc_obj.sequence.split('->')[mc_obj.current_station])-1] == 'b':
-					rq_obj = Request.objects.get(pk = int(mc_obj.sequence.split('->')[mc_obj.current_station][0:len(mc_obj.sequence.split('->')[mc_obj.current_station]-2)]))
-					print("done")
-					rq_obj.status = 'done'
-					rq_obj.save()
-					return Response("request done")
-				mc_obj.current_station = mc_obj.current_station+1;
-				mc_obj.save()
-				return Response("pickup done")
+
 		else:
 			return Response("invalid serializer")
 	
