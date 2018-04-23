@@ -112,3 +112,19 @@ class Cancel_Request(mixins.CreateModelMixin,
 				return Response("Request has already matched")
 
 		
+class Get_RequestxDriver_Detail(mixins.CreateModelMixin,
+					    viewsets.GenericViewSet):
+	queryset = Request.objects.all()
+	serializer_class = GetRequestxDriverDetail
+	permission_classes = (IsAuthenticated,)
+	def create(self,request):
+		serializer = self.get_serializer(data = request.data)
+		if serializer.is_valid():
+			rq = Request.objects.get(pk = serializer.data['request_id'])
+			if rq.status=='doing':
+				rq.status = "cancelled"
+				rq.save()
+				return Response("success")
+			elif rq.status == 'matched':
+				return Response("Request has already matched")
+		

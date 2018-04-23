@@ -88,7 +88,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     last_active = models.DateTimeField(_('last active'), blank=True, null=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
-    rating_sum = models.IntegerField(default=0)
+    rating_sum = models.FloatField(default=0)
     rating_number = models.IntegerField(default=0)
     objects = AccountManager()
 
