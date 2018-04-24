@@ -106,6 +106,9 @@ class test_Token(mixins.CreateModelMixin,viewsets.GenericViewSet):
     serializer_class = testSerializer
     def create(self,request):
         if request.user.is_authenticated():
+            rq = Request.objects.get(pk = serializer.data['request_id'])
+            rq.signature = serializer.data['img']
+            rq.save()
             return Response(request.user.email)
         else :
             return Response("Unauthenticated")

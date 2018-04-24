@@ -43,6 +43,8 @@ class UserLogoutSerializer(serializers.Serializer):
 
 		
 class testSerializer(serializers.Serializer):
+	img = serializers.ImageField()
+	request_id = serializers.IntegerField()
 		"""sdgg"""
 
 
