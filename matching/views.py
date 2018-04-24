@@ -234,8 +234,8 @@ class Test_Img(mixins.CreateModelMixin,
 		serializer = self.get_serializer(data = request.data)
 		if serializer.is_valid():
 			rq = Request.objects.get(pk = serializer.data['request_id'])
-            rq.signature = serializer.data['img']
-            rq.save()
+			rq.signature = serializer.data['img']
+			rq.save()
 			return Response("Done")
 		else:
 			return Response("invalid serializer")
