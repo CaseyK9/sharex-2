@@ -224,3 +224,18 @@ class Make_It_Done(mixins.CreateModelMixin,
 			return Response("Done")
 		else:
 			return Response("invalid serializer")
+
+class Test_Img(mixins.CreateModelMixin,
+					    viewsets.GenericViewSet):
+	queryset = Matching.objects.all()
+	serializer_class = MakeItDone
+	permission_classes = (IsDriverAccount,)
+	def create(self,request):
+		serializer = self.get_serializer(data = request.data)
+		if serializer.is_valid():
+			rq = Request.objects.get(pk = serializer.data['request_id'])
+            rq.signature = serializer.data['img']
+            rq.save()
+			return Response("Done")
+		else:
+			return Response("invalid serializer")

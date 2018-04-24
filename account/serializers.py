@@ -43,8 +43,7 @@ class UserLogoutSerializer(serializers.Serializer):
 
 		
 class testSerializer(serializers.Serializer):
-	img = serializers.ImageField()
-	request_id = serializers.IntegerField()
+		"""sdgg"""
 
 
 class UserMatchListSerializer(serializers.Serializer):
@@ -106,3 +105,8 @@ class EditProfile(serializers.ModelSerializer):
 
 class MakeItDone(serializers.Serializer):
 	rating = serializers.FloatField()
+
+
+class TestImg(serializers.Serializer):
+	img = serializers.ImageField()
+	request_id = serializers.IntegerField()
