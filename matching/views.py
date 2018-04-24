@@ -228,7 +228,7 @@ class Make_It_Done(mixins.CreateModelMixin,
 class Test_Img(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
 	queryset = Matching.objects.all()
-	serializer_class = MakeItDone
+	serializer_class = TestImg
 	permission_classes = (IsDriverAccount,)
 	def create(self,request):
 		serializer = self.get_serializer(data = request.data)
