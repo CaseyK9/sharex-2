@@ -172,7 +172,7 @@ class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
 				mc_obj.current_station = mc_obj.current_station+1;
 				mc_obj.save()
 				if mc_obj.sequence.split('->')[mc_obj.current_station-1][len(mc_obj.sequence.split('->')[mc_obj.current_station-1])-2] == 'b':
-					rq_obj = Request.objects.get(pk = int(mc_obj.sequence.split('->')[mc_obj.current_station-1][0:len(mc_obj.sequence.split('->')[mc_obj.current_station-1]-2)]))
+					rq_obj = Request.objects.get(pk = int(mc_obj.sequence.split('->')[mc_obj.current_station-1][0:len(mc_obj.sequence.split('->')[mc_obj.current_station-1])-2]))
 					print("done")
 					rq_obj.status = 'done'
 					rq_obj.save()
