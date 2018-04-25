@@ -111,5 +111,5 @@ class MakeItDone(serializers.Serializer):
 class FileSerializer(serializers.ModelSerializer,serializers.Serializer):
     request_id = serializers.IntegerField()
     class Meta():
-            model = File
+            model = Signature
             fields = ('image')
