@@ -59,7 +59,7 @@ class GetMatchViewSet(mixins.CreateModelMixin,
 			var_request = Matching.objects.create(
 				travel_data = travel_obj,
 				request_data = request_obj,
-				#lumbub = 
+				#lumbub =
 			).save()
 
 			print(var_request)
@@ -71,7 +71,7 @@ class GetMatchViewSet(mixins.CreateModelMixin,
 
 class Get_Multiple_Matching(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
-	
+
 	queryset = Matching.objects.all()
 	serializer_class = GetMultipleMatching
 	permission_classes =  (IsDriverAccount,IsAuthenticated,)
@@ -87,7 +87,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 			j = len(serializer.data['request_list'])
 			if j==0:
 				return Response({'status':'no list'})
-			else:		
+			else:
 				response_message['travel_id'].append(travel_obj.pk)
 				for i in range(0,j+1,1):
 					if i==0:
@@ -120,7 +120,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					message = message+temp['route'][str(i)]['name']+"->"
 
 
-				
+
 				var_matching = Matching.objects.create(
 					travel_data = travel_obj,
 					sequence = message
@@ -147,7 +147,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					#print(payload)
 					headers = {'Content-Type':"application/json",'Authorization':"key=AAAAlRsX6G8:APA91bHeUES-WUYy2bYSLzbK6td4p8xZACl_LunpyDmLEtffHD_MYkJrDii5XdfhTDX27Vr1m9YwrFL7NhJtdVHUJENur3Zf5IRD5zKduM1MH_d49zrGz77u9r6DaT2erz_Nayp_izfp"}
 					r = requests.post(url,data=payload,headers=headers)
-					
+
 				travel_obj.account.status = "busy"
 				print(travel_obj.account.status)
 				travel_obj.account.save()
@@ -192,7 +192,7 @@ class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
 
 		else:
 			return Response("invalid serializer")
-	
+
 
 
 class Store_Route_Url(mixins.CreateModelMixin,
@@ -229,12 +229,13 @@ class Test_Img(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
 	queryset = Matching.objects.all()
 	serializer_class = TestImg
-	permission_classes = (IsDriverAccount,)
+	permission_classes = (IsAuthenticated,)
 	def create(self,request):
 		serializer = self.get_serializer(data = request.data)
 		if serializer.is_valid():
 			rq = Request.objects.get(pk = serializer.data['request_id'])
 			rq.signature = serializer.data['img']
+			print(serializer.data['img'])
 			rq.save()
 			return Response("Done")
 		else:
