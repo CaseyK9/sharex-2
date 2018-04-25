@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from account.serializers import FileSerializer
 from account.permissions import IsCustomerAccount,IsDriverAccount,IsAuthenticated
+from .models import Signature
 class FileView(APIView):
     queryset = Signature.objects.all()
     permission_classes = (IsAuthenticated,)
