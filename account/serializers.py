@@ -6,7 +6,7 @@ from request.models import Request
 from car.models import Car
 from travel.models import Travel
 from matching.models import *
-from upload.models import *
+#from upload.models import *
 class UserLogInSerializer(serializers.Serializer):
 
     email = serializers.CharField(max_length=255)
@@ -107,9 +107,9 @@ class EditProfile(serializers.ModelSerializer):
 class MakeItDone(serializers.Serializer):
 	rating = serializers.FloatField()
 
-
+'''
 class FileSerializer(serializers.ModelSerializer,serializers.Serializer):
     request_id = serializers.IntegerField()
     class Meta():
             model = Signature
-            fields = ('image')
+            fields = ('image')'''
