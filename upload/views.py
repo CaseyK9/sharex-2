@@ -11,11 +11,12 @@ class FileView(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
     queryset = Signature.objects.all()
     permission_classes = (IsAuthenticated,)
+    serializer_class = (FileSerializer,)
     parser_classes = (MultiPartParser, FormParser)
     def create(self, request):
-        file_serializer = FileSerializer(data=request.data)
-        if file_serializer.is_valid():
-            file_serializer.save()
-            return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+        serializer = self.get_serializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
