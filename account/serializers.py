@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import raise_errors_on_nested_writes, model_meta
-from upload.models import Signature
+#from upload.models import Signature
 from .models import Account
 from request.models import Request
 from car.models import Car
