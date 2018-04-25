@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import raise_errors_on_nested_writes, model_meta
-
+from upload.models import Signature
 from .models import Account
 from request.models import Request
 from car.models import Car
@@ -36,12 +36,12 @@ class UserTravelSerializer(serializers.ModelSerializer):
 class UseraddcarSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Car
-		fields = ('license','_model','year','_type')	
+		fields = ('license','_model','year','_type')
 
 class UserLogoutSerializer(serializers.Serializer):
 	"""docstring for UserLogoutSerializer"""
 
-		
+
 class testSerializer(serializers.Serializer):
 		"""sdgg"""
 
@@ -57,8 +57,8 @@ class Travel_List_Serializer(serializers.ModelSerializer):
 class UserMatchSerializer(serializers.Serializer):
 	travel = serializers.IntegerField()
 	request = serializers.IntegerField()
-	
-			
+
+
 class GetMatchingDetail(serializers.Serializer):
 	matching_id = serializers.IntegerField()
 
@@ -107,6 +107,8 @@ class MakeItDone(serializers.Serializer):
 	rating = serializers.FloatField()
 
 
-class TestImg(serializers.Serializer):
-	img = serializers.ImageField()
-	request_id = serializers.IntegerField()
+class FileSerializer(serializers.ModelSerializer,serializers.Serializer):
+    request_id = serializers.IntegerField()
+    class Meta():
+            model = File
+            fields = ('image')

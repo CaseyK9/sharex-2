@@ -12,6 +12,8 @@ from travel.models import Travel
 from request.models import Request
 from account.models import Account
 from matching_detail.models import Matching_Detail
+from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.viewsets import ModelViewSet
 import json
 import requests
 
@@ -221,22 +223,6 @@ class Make_It_Done(mixins.CreateModelMixin,
 			request.user.rating_sum += serializer.data['rating']
 			request.user.rating_number += 1
 			request.user.save()
-			return Response("Done")
-		else:
-			return Response("invalid serializer")
-
-class Test_Img(mixins.CreateModelMixin,
-					    viewsets.GenericViewSet):
-	queryset = Matching.objects.all()
-	serializer_class = TestImg
-	permission_classes = (IsAuthenticated,)
-	def create(self,request):
-		serializer = self.get_serializer(data = request.data)
-		if serializer.is_valid():
-			rq = Request.objects.get(pk = serializer.data['request_id'])
-			rq.signature = serializer.data['img']
-			print(serializer.data['img'])
-			rq.save()
 			return Response("Done")
 		else:
 			return Response("invalid serializer")
