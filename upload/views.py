@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import FileSerializer
+from account.serializers import FileSerializer
 from account.permissions import IsCustomerAccount,IsDriverAccount,IsAuthenticated
 class FileView(APIView):
     permission_classes = (IsAuthenticated,)
