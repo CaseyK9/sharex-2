@@ -111,8 +111,6 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 							tmp.save()
 							reserve_list.append(tmp)
 						response_message['details'].append({'request_id':tmp.pk,'customer_name':tmp.account.first_name,'customer_tel':tmp.account.tel,'pickup_location':tmp.pickup_location,'pickup_longtitude':tmp.pickup_longtitude,'pickup_lattitude':tmp.pickup_lattitude,'destination_location':tmp.destination_location,'destination_longtitude':tmp.destination_longtitude,'destination_lattitude':tmp.destination_lattitude,'receiver_name':tmp.receiver_name,'receiver_tel':tmp.receiver_tel,'receiver_address':tmp.receiver_address,'type':tmp._type,'fare':tmp.fare})
-						if tmp.status == "matched":
-							return Response({'status':'Unavailable request'})
 						location.append({'address':str(tmp.pk)+"a0",'lat':str(tmp.pickup_lattitude),'lng':str(tmp.pickup_longtitude)})
 						location.append({'address':str(tmp.pk)+"b0",'lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude),'restrictions':{'after':(i*2)+1}})
 				url = 'https://api.routexl.nl/tour/'
