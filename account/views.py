@@ -95,6 +95,8 @@ class UserLogoutViewSet(mixins.CreateModelMixin,viewsets.GenericViewSet):
 
     def create(self,request):
         if request.user.is_authenticated():
+            request.user.firebase_key = ""
+            request.user.save()
             logout(request)
             return Response("loged out", status=status.HTTP_200_OK)
         else :
