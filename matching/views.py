@@ -5,11 +5,7 @@ from request.models import Request
 from travel.models import Travel
 from urllib.request import urlopen
 from .models import Matching
-<<<<<<< HEAD
-from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail,GetMultipleMatching,GetMultipleMatching_Sub,UpdateMatchingStation,StoreRouteUrl,MakeItDone,Test_Img
-=======
 from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail,GetMultipleMatching,GetMultipleMatching_Sub,UpdateMatchingStation,StoreRouteUrl,MakeItDone
->>>>>>> c7ce43c02f75a6fe67b1a3c6f20884d2606535db
 from rest_framework.response import Response
 from django.core import serializers
 from travel.models import Travel
