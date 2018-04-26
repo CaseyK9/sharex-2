@@ -82,7 +82,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid():
 			location=[]
-			response_message = {'matching_id':[],'travel_id':[],'sequence':[],'details':[]}
+			response_message = {'matching_id':[],'travel_id':[],'sequence':[],'details':[],'status':'matching complete'}
 			travel_obj = Travel.objects.get(pk = serializer.data['travel_id'])
 			if travel_obj.account.status == "busy":
 				return Response({'status':'Driver is busy'})
