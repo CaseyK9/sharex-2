@@ -56,12 +56,16 @@ class Get_Request_Detail(mixins.CreateModelMixin,
 		serializer = self.get_serializer(data = request.data)
 		if serializer.is_valid():
 			rq = Request.objects.get(pk = serializer.data['request_id'])
+			mc_dt = Matching_Detail.objects.get(request = rq)
 			if rq != None:
-				detail = {'details':[],'status':[]}
+				detail = {'request_details':[],'driver_detials':[],'status':[]}
 				name = rq.account.first_name+" "+rq.account.last_name
-				pickup_address = rq.pickup_location.split(',',1)[0]
-				destination_address = rq.destination_location.split(',',1)[0]
-				detail['details'].append({'request_id':rq.pk,'customer_name':name,'customer_tel':rq.account.tel,'pickup_location':pickup_address,'pickup_longtitude':rq.pickup_longtitude,'pickup_lattitude':rq.pickup_lattitude,'destination_location':destination_address,'destination_longtitude':rq.destination_longtitude,'destination_lattitude':rq.destination_lattitude,'receiver_name':rq.receiver_name,'receiver_tel':rq.receiver_tel,'receiver_address':rq.receiver_address,'type':rq._type,'fare':rq.fare,'tracking_key':rq.tracking_key,'route_url':rq.route_url})
+				#pickup_address = rq.pickup_location.split(',',1)[0]
+				#destination_address = rq.destination_location.split(',',1)[0]
+				detail['request_details'].append({'request_id':rq.pk,'customer_name':name,'customer_tel':rq.account.tel,'pickup_location':rq.pickup_location,'pickup_longtitude':rq.pickup_longtitude,'pickup_lattitude':rq.pickup_lattitude,'destination_location':rq.destination_location,'destination_longtitude':rq.destination_longtitude,'destination_lattitude':rq.destination_lattitude,'receiver_name':rq.receiver_name,'receiver_tel':rq.receiver_tel,'receiver_address':rq.receiver_address,'type':rq._type,'fare':rq.fare,'tracking_key':rq.tracking_key,'route_url':rq.route_url})
+				if mc_dt != None:
+					ac = mc_dt.travel.account
+					detail['driver_detials'].append({'name':ac.first_name+" "+ac.last_name,'tel':ac.tel,'license':ac.license,'rating':rating_sum/rating_number})
 				detail['status'].append({'status':'okay'})
 				return Response(detail)
 			else:
