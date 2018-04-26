@@ -8,7 +8,7 @@ class Image_Upload(APIView):
   parser_classes = (MultiPartParser, FormParser)
   def post(self, request, *args, **kwargs):
     file_serializer = ImageUpload(data=request.FILES)
-    serializer = self.get_serializer(data=request.data)
+    serializer = self.ImageUpload(data=request.data)
     #rq = Request.objects.get()
     if file_serializer.is_valid():
       file_serializer.save()
