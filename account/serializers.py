@@ -110,10 +110,8 @@ class MakeItDone(serializers.Serializer):
 class GetDriverDetail(serializers.Serializer):
 	"""asdfasdf"""
 
-class ImageUpload(serializers.ModelSerializer):
-  class Meta():
-    model = Imageupload
-    fields = ('image')
+class ImageUpload(serializers.Serializer):
+  image = serializers.ImageField()
 
 '''
 class FileSerializer(serializers.ModelSerializer,serializers.Serializer):
