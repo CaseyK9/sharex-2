@@ -112,7 +112,7 @@ class GetDriverDetail(serializers.Serializer):
 
 class ImageUpload(serializers.Serializer):
 	request_id = serializers.IntegerField()
-	image = serializers.ImageFiled()
+	image = serializers.ImageField()
 
 '''
 class FileSerializer(serializers.ModelSerializer,serializers.Serializer):
