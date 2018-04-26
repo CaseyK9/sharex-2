@@ -7,12 +7,12 @@ from request.models import Request
 class Image_Upload(APIView):
 	parser_classes = (MultiPartParser, FormParser)
 	def post(self, request, *args, **kwargs):
-		file_serializer = ImageUpload(data=request.data)
-		#serializer = ImageUpload(data=request.data)
+		file_serializer = ImageUpload(data=request.FILES)
+		serializer = ImageUpload(data=request.data)
 		#rq = Request.objects.get()
 		if file_serializer.is_valid():
 			#print(file_serializer.data.)
 			#file_serializer.save()
-			return Response(file_serializer.FILES, status=status.HTTP_201_CREATED)
+			return Response(serializer.data['request_id'], status=status.HTTP_201_CREATED)
 		else:
 			return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
