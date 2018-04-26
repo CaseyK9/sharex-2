@@ -56,7 +56,9 @@ class Get_Request_Detail(mixins.CreateModelMixin,
 		serializer = self.get_serializer(data = request.data)
 		if serializer.is_valid():
 			rq = Request.objects.get(pk = serializer.data['request_id'])
-			mc_dt = Matching_Detail.objects.get(request = rq)
+			mc_dt = None
+			if rq.status == "matched" or rq.status == "finished":
+				mc_dt = Matching_Detail.objects.get(request = rq)
 			if rq != None:
 				detail = {'request_details':[],'driver_detials':[],'status':[]}
 				name = rq.account.first_name+" "+rq.account.last_name
@@ -116,16 +118,15 @@ class Cancel_Request(mixins.CreateModelMixin,
 				return Response("Request has already matched")
 
 		
-class Get_RequestxDriver_Detail(mixins.CreateModelMixin,
+class Get_Driver_Detail(mixins.CreateModelMixin,
 					    viewsets.GenericViewSet):
 	queryset = Request.objects.all()
-	serializer_class = GetRequestxDriverDetail
-	permission_classes = (IsAuthenticated,)
+	serializer_class = GetDriverDetail
+	permission_classes = (IsDriverAccount,)
 	def create(self,request):
 		serializer = self.get_serializer(data = request.data)
 		if serializer.is_valid():
-			rq = Request.objects.get(pk = serializer.data['request_id'])
-			mc_dt = Matching_Detail.objects.get(request = rq)
-			return Response(mc_dt.pk)
+			ac = request.user
+			return Response({'name':ac.first_name+" "+ac.last_name,'tel':ac.tel,'license':ac.license,'rating':ac.rating_sum/ac.rating_number})
 		else:
 			return Response("invalid serializer")

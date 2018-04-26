@@ -107,8 +107,8 @@ class EditProfile(serializers.ModelSerializer):
 class MakeItDone(serializers.Serializer):
 	rating = serializers.FloatField()
 
-class GetRequestxDriverDetail(serializers.Serializer):
-	request_id = serializers.IntegerField()
+class GetDriverDetail(serializers.Serializer):
+	"""asdfasdf"""
 		
 
 '''
