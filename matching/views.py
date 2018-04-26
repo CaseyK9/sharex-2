@@ -102,7 +102,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 						tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
 						reserve_list = []
 						if tmp.status == "matched":
-							for j in range(0,reserve_list,1):
+							for j in range(0,len(reserve_list),1):
 								reserve_list[j].status = "doing"
 								reserve_list[j].save()
 							return Response({'status':'Unavailable request'})
