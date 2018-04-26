@@ -6,7 +6,7 @@ from request.models import Request
 from car.models import Car
 from travel.models import Travel
 from matching.models import *
-#from upload.models import *
+from imageupload.models import *
 class UserLogInSerializer(serializers.Serializer):
 
     email = serializers.CharField(max_length=255)
@@ -109,7 +109,11 @@ class MakeItDone(serializers.Serializer):
 
 class GetDriverDetail(serializers.Serializer):
 	"""asdfasdf"""
-		
+
+class ImageUpload(serializers.ModelSerializer):
+  class Meta():
+    model = Imageupload
+    fields = ('image')
 
 '''
 class FileSerializer(serializers.ModelSerializer,serializers.Serializer):

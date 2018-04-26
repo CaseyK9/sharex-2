@@ -43,12 +43,13 @@ router.register(r'add-car',add_car)
 
 router.register(r'make-it-done',Make_It_Done)
 router.register(r'get-driver-detail',Get_Driver_Detail)
-router.register(r'imageupload',model_form_upload)
+router.register(r'image-upload',Image_Upload)
 # router.register(r'gentoken',gen_token)
 # router.register(r'logout',UserLogoutViewSet)
 
 urlpatterns = [
     url(r'^api/$', schema_view),
+    url(r'^upload/$', Image_Upload.as_view(), name='file-upload'),
     #url(r'^test/$', test_Token),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
