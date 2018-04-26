@@ -43,7 +43,7 @@ router.register(r'add-car',add_car)
 
 router.register(r'make-it-done',Make_It_Done)
 router.register(r'get-driver-detail',Get_Driver_Detail)
-router.register(r'image-upload',Image_Upload)
+#router.register(r'image-upload',Image_Upload)
 # router.register(r'gentoken',gen_token)
 # router.register(r'logout',UserLogoutViewSet)
 
