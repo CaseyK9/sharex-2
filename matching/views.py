@@ -5,7 +5,7 @@ from request.models import Request
 from travel.models import Travel
 from urllib.request import urlopen
 from .models import Matching
-from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail,GetMultipleMatching,GetMultipleMatching_Sub,UpdateMatchingStation,StoreRouteUrl,MakeItDone,TestImg
+from account.serializers import UserMatchListSerializer,UserMatchSerializer,GetMatchingDetail,GetMultipleMatching,GetMultipleMatching_Sub,UpdateMatchingStation,StoreRouteUrl,MakeItDone,Test_Img
 from rest_framework.response import Response
 from django.core import serializers
 from travel.models import Travel
@@ -98,6 +98,16 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 						location.append({'address':'stop','lat':str(tmp.destination_lattitude),'lng':str(tmp.destination_longtitude)})
 					else:
 						tmp = Request.objects.get(pk = serializer.data['request_list'][i]['request_id'])
+						reserve_list = []
+						if tmp.status == "matched":
+							for j in range(0,reserve_list,1):
+								reserve_list[j].status = "doing"
+								reserve_list[j].save()
+							return Response({'status':'Unavailable request'})
+						else:
+							tmp.status = "matched"
+							tmp.save()
+							reserve_list.append(tmp)
 						response_message['details'].append({'request_id':tmp.pk,'customer_name':tmp.account.first_name,'customer_tel':tmp.account.tel,'pickup_location':tmp.pickup_location,'pickup_longtitude':tmp.pickup_longtitude,'pickup_lattitude':tmp.pickup_lattitude,'destination_location':tmp.destination_location,'destination_longtitude':tmp.destination_longtitude,'destination_lattitude':tmp.destination_lattitude,'receiver_name':tmp.receiver_name,'receiver_tel':tmp.receiver_tel,'receiver_address':tmp.receiver_address,'type':tmp._type,'fare':tmp.fare})
 						if tmp.status == "matched":
 							return Response({'status':'Unavailable request'})
@@ -138,7 +148,7 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 					#	request = tmp,
 					#	status = 'matched'
 					#)
-					tmp.status = "matched"
+					#tmp.status = "matched"
 					tmp.tracking_key = serializer.data['tracking_key']
 					tmp.save()
 					url = 'https://fcm.googleapis.com/fcm/send'
