@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'travel',
     'matching',
     'matching_detail',
+    'imageupload',
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',

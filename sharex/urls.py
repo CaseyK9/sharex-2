@@ -11,6 +11,7 @@ from request.views import *
 from car.views import *
 from travel.views import *
 from matching.views import *
+from imageupload.views import *
 #from upload.views import *
 
 schema_view = get_swagger_view(title='ShareX')
@@ -42,7 +43,7 @@ router.register(r'add-car',add_car)
 
 router.register(r'make-it-done',Make_It_Done)
 router.register(r'get-driver-detail',Get_Driver_Detail)
-#router.register(r'upload-img',FileView)
+router.register(r'imageupload',model_form_upload)
 # router.register(r'gentoken',gen_token)
 # router.register(r'logout',UserLogoutViewSet)
 
