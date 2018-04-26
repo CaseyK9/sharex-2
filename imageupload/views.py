@@ -10,8 +10,7 @@ class Image_Upload(APIView):
     file_serializer = ImageUpload(data=request.data)
     #serializer = ImageUpload(data=request.data)
     #rq = Request.objects.get()
-    if file_serializer.is_valid():
-      file_serializer.save()
+    print(file_serializer.data.request_id)
       return Response(file_serializer.data, status=status.HTTP_201_CREATED)
     else:
       return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
