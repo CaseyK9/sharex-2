@@ -16,7 +16,7 @@ class Image_Upload(APIView):
 		if file_serializer.is_valid():
 			#print(file_serializer.data.)
 			file_serializer.save()
-			mc = Matching_Detail.objects.get(request_id = file_serializer['request_id'])
+			mc = Matching_Detail.objects.get(request_id = int(file_serializer['request_id']))
 			mc_obj = Matching.objects.get(pk=mc.matching_id)
 			if mc_obj.travel_data.status == 'finished':
 				return Response("This matching has been finished")
