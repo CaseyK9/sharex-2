@@ -22,8 +22,8 @@ class Image_Upload(APIView):
 			mc_obj = Matching.objects.get(pk=mc.matching_id)
 			if mc_obj.travel_data.status == 'finished':
 				return Response("This matching has been finished")
-			if mc_obj.current_station < len(mc_obj.sequence.split('->'))-1:
-				if mc_obj.current_station == len(mc_obj.sequence.split('->'))-2:
+			if mc_obj.current_station < len(mc_obj.sequence.split('->')):
+				if mc_obj.current_station == len(mc_obj.sequence.split('->'))-1:
 					mc_obj.travel_data.status = 'finished'
 					mc_obj.travel_data.account.status = 'free'
 					mc_obj.travel_data.save()
