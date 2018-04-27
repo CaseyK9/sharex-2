@@ -190,16 +190,11 @@ class Update_Matching_Station(mixins.CreateModelMixin,viewsets.GenericViewSet):
 				else:
 					return Response("pickup done")
 			if mc_obj.current_station == len(mc_obj.sequence.split('->'))-1: #success traveling
-				mc_obj.travel_data.status = 'finished';
-				mc_obj.travel_data.account.status = 'free';
-				#for i in range(0,len(mc_obj.sequence.split("->"))-1,1):
-				#	rq_obj = Request.objects.filter(pk = int(mc_obj.sequence.split("->")[i][0:len(mc_obj.sequence.split("->")[i])-1]))
-				#	rq_obj.status = 'done'
-				#	rq_obj.save()
+				mc_obj.travel_data.status = 'finished'
+				mc_obj.travel_data.account.status = 'free'
 				mc_obj.travel_data.save()
 				mc_obj.travel_data.account.save()
 				return Response("travel completed")
-
 		else:
 			return Response("invalid serializer")
 
