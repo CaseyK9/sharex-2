@@ -6,6 +6,6 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, PermissionsMixin, Permission)
 from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUsernameValidator
 class Imageupload(models.Model):
-	image = models.ImageField(upload_to="signature",blank=False, null=False)
+	image = models.ImageField(upload_to="signature",blank=False, null=True)
 	rating = models.FloatField(default=0,blank=True,null=True)
 	request_id = models.IntegerField(default=0,blank=True,null=True)
