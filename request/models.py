@@ -23,7 +23,7 @@ class Request(models.Model):
 	receiver_tel = models.CharField(max_length=255,blank=True,null=True)
 	receiver_address = models.CharField(max_length=255,blank=True,null=True)
 	
-	signatute = models.ImageField(upload_to='signature',blank=True,null=True)
+	signatute = models.CharField(max_length=255,blank=True,null=True)
 	tracking_key = models.CharField(max_length=255,blank=True,null=True)
 	route_url =models.CharField(max_length=255,blank=True,null=True)
 	timestamp = models.DateTimeField(auto_now_add=True, db_index=True,null=True)
