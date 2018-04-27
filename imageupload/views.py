@@ -16,7 +16,7 @@ class Image_Upload(APIView):
 		if file_serializer.is_valid():
 			#print(file_serializer.data.)
 			file_serializer.save()
-			print(file_serializer)
+			return Response(file_serializer)
 			rq = Request.objects.get(pk = file_serializer[2])
 			mc = Matching_Detail.objects.get(request = rq)
 			mc_obj = Matching.objects.get(pk=mc.matching_id)
