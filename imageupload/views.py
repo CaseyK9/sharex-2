@@ -4,6 +4,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from account.serializers import ImageUpload
 from request.models import Request
+from travel.models import *
+from matching_detail.models import *
+from account.models import *
+from matching.models import *
 class Image_Upload(APIView):
 	parser_classes = (MultiPartParser, FormParser)
 	def post(self, request, *args, **kwargs):
