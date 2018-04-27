@@ -33,7 +33,7 @@ class Image_Upload(APIView):
 					mc_obj.current_station = mc_obj.current_station+1;
 					mc_obj.status = 'finished'
 					mc_obj.save()
-					mc_obj.travel_data.account.rating_sum += file_serializer.rating
+					mc_obj.travel_data.account.rating_sum += file_serializer.data['rating']
 					mc_obj.travel_data.account.rating_number += 1
 					mc_obj.travel_data.account.save()
 					file_serializer.save()
