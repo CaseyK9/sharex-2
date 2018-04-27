@@ -30,7 +30,7 @@ class Image_Upload(APIView):
 					mc_obj.travel_data.account.save()
 					rq.status = 'finished'
 					rq.signature = str(file_serializer.validated_data['image'])
-					print(str(file_serializer.validated_data['image']))
+					print(rq.signature)
 					rq.save()
 					mc_obj.current_station = mc_obj.current_station+1;
 					mc_obj.status = 'finished'
