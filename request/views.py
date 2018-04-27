@@ -71,7 +71,7 @@ class Get_Request_Detail(mixins.CreateModelMixin,
 						rating = 0
 					else:
 						rating = ac.rating_sum/ac.rating_number
-					detail['driver_detials'].append({'name':ac.first_name+" "+ac.last_name,'tel':ac.tel,'license':ac.license,'rating':ac.rating_sum/rating})
+					detail['driver_detials'].append({'name':ac.first_name+" "+ac.last_name,'tel':ac.tel,'license':ac.license,'rating':rating})
 				detail['status'].append({'status':'okay'})
 				return Response(detail)
 			else:
