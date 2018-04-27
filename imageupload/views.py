@@ -28,12 +28,12 @@ class Image_Upload(APIView):
 					mc_obj.travel_data.account.status = 'free'
 					mc_obj.travel_data.save()
 					mc_obj.travel_data.account.save()
-					rq.signature = file_serializer.data['image']
+					rq.signature = file_serializer.validated_data['image']
 					rq.save()
 					mc_obj.current_station = mc_obj.current_station+1;
 					mc_obj.status = 'finished'
 					mc_obj.save()
-					mc_obj.travel_data.account.rating_sum += file_serializer.data['rating']
+					mc_obj.travel_data.account.rating_sum += file_serializer.validated_data['rating']
 					mc_obj.travel_data.account.rating_number += 1
 					mc_obj.travel_data.account.save()
 					file_serializer.save()
@@ -44,9 +44,9 @@ class Image_Upload(APIView):
 					rq_obj = Request.objects.get(pk = int(mc_obj.sequence.split('->')[mc_obj.current_station-1][0:len(mc_obj.sequence.split('->')[mc_obj.current_station-1])-2]))
 					print("done")
 					rq_obj.status = 'finished'
-					rq_obj.signature = file_serializer.data['image']
+					rq_obj.signature = file_serializer.validated_data['image']
 					rq_obj.save()
-					mc_obj.travel_data.account.rating_sum += file_serializer.rating
+					mc_obj.travel_data.account.rating_sum += file_serializer.validated_data['rating']
 					mc_obj.travel_data.account.rating_number += 1
 					mc_obj.travel_data.account.save()
 					file_serializer.save()
