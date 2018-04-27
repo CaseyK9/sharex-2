@@ -5,9 +5,9 @@ from rest_framework import status
 from account.serializers import ImageUpload
 from request.models import Request
 class Image_Upload(APIView):
-	parser_classes = (MultiPartParser, FormParser)
+	parser_classes = (MultiPartParser, FormParser,JSONParser)
 	def post(self, request, *args, **kwargs):
-		#file_serializer = ImageUpload(data=request.FILES)
+		file_serializer = ImageUpload(data=request.FILES)
 		serializer = ImageUpload(data=request.data)
 		#rq = Request.objects.get()
 		if serializer.is_valid():
