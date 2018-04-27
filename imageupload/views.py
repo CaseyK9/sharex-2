@@ -15,7 +15,7 @@ class Image_Upload(APIView):
 		#rq = Request.objects.get()
 		if file_serializer.is_valid():
 			#print(file_serializer.data.)
-			return Response(file_serializer.validated_data['image'])
+			return Response(str(file_serializer.validated_data['image']))
 			#return Response(file_serializer.data)
 			rq = Request.objects.get(pk = file_serializer.validated_data['request_id'])
 			mc = Matching_Detail.objects.get(request = rq)
