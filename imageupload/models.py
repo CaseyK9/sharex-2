@@ -1,3 +1,5 @@
 from django.db import models
 class Imageupload(models.Model):
-  image = models.ImageField(upload_to="signature",blank=False, null=False)
+	image = models.ImageField(upload_to="signature",blank=False, null=False)
+	rating = models.FloatField()
+	matching_id = models.IntegerField()

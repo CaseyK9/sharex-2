@@ -111,8 +111,11 @@ class GetDriverDetail(serializers.Serializer):
 	"""asdfasdf"""
 
 class ImageUpload(serializers.Serializer):
-	request_id = serializers.IntegerField()
-	image = serializers.ImageField()
+	class  Meta():
+		model = Imageupload
+		fields = '__all__'
+
+			
 
 '''
 class FileSerializer(serializers.ModelSerializer,serializers.Serializer):
