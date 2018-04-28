@@ -54,7 +54,7 @@ class UserLoginViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             detail = []
             if user.status == "busy":
                 for i in Matching.objects.all():
-                    if i.travel_data.account == request.user:
+                    if i.travel_data.account == request.user and i.travel_data.status == 'matched':
                         detail.append({'matching_id':i.pk})
                 
             
