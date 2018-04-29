@@ -98,7 +98,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
         (3, 'pickup'),
         (4, 'motorcycle'),
     )
-    car_type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES , default=0)
+    car_type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES , default=None)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
