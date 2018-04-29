@@ -54,7 +54,6 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 					destination_lattitude = serializer.data['destination_lattitude'],
 					current_longtitude = serializer.data['current_longtitude'],
 					current_lattitude = serializer.data['current_lattitude'],
-					status = serializer.data['status']
 				)
 				tv.save()
 				LIST = {'details':[],'status':[]}
@@ -69,7 +68,7 @@ class GetTravelViewSet(mixins.CreateModelMixin,
 						if i.expire_time < timezone.now():
 							i.status = 'expire'
 							i.save()
-						else:
+						elif tv.account.car_type == i._type:
 							url = "https://maps.googleapis.com/maps/api/directions/json?origin="+str(tv.start_lattitude)+","+str(tv.start_longtitude)+"&destination="+str(tv.destination_lattitude)+","+str(tv.destination_longtitude)+"&waypoints=via:"+str(i.pickup_lattitude)+","+str(i.pickup_longtitude)+"|via:"+str(i.destination_lattitude)+","+str(i.destination_longtitude)+"&key=AIzaSyD8j1ghThaDbCn_8FNv2CtXqAmMNSLje8M"
 							response = urlopen(url).read()
 							json_res = json.loads(response)

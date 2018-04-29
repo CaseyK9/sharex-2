@@ -92,6 +92,14 @@ class Account(AbstractBaseUser, PermissionsMixin):
     rating_number = models.IntegerField(default=0)
     objects = AccountManager()
 
+    TYPE_CHOICES = (
+        (1, 'truck'),
+        (2, 'sedan'),
+        (3, 'pickup'),
+        (4, 'motorcycle'),
+    )
+    car_type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES , default=0)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

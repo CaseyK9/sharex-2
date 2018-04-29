@@ -14,8 +14,8 @@ class UserLogInSerializer(serializers.Serializer):
     firebase_key = serializers.CharField(max_length=255)
 
 
-class UserRegisterSerializer(serializers.ModelSerializer):
-
+class UserRegisterSerializer(serializers.ModelSerializer,serializers.Serializer):
+	car_type = serializers.IntegerField()
 	class Meta:
 		model = Account
 		fields = ('email','password','first_name','last_name','tel','address','is_driver','personal_id','license')
