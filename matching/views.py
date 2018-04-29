@@ -129,7 +129,8 @@ class Get_Multiple_Matching(mixins.CreateModelMixin,
 						response_message['sequence'].append({'request_id':rq_id,'status':'dropoff','complete':False})
 					message = message+temp['route'][str(i)]['name']+"->"
 
-
+				travel_obj.status = "matched"
+				travel_obj.save()
 
 				var_matching = Matching.objects.create(
 					travel_data = travel_obj,
