@@ -15,10 +15,9 @@ class UserLogInSerializer(serializers.Serializer):
 
 
 class UserRegisterSerializer(serializers.ModelSerializer,serializers.Serializer):
-	car_type = serializers.IntegerField()
 	class Meta:
 		model = Account
-		fields = ('email','password','first_name','last_name','tel','address','is_driver','personal_id','license')
+		fields = ('email','password','first_name','last_name','tel','address','is_driver','personal_id','license','car_type')
 
 
 class UserRequestSerializer(serializers.ModelSerializer,serializers.Serializer):
